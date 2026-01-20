@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sharepoint-cleanup-job
+  namespace: default
+spec:
+  schedule: "0 2 * * *"  # Daily at 2 AM, adjust as needed
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: sharepoint-cleanup-job
+            image: your-registry/sharepoint-sync:latest  # Replace with your image
+            imagePullPolicy: Always
+            command: ["uv", "run", "python", "main.py", "cleanup"]
+            env:
+            - name: SHAREPOINT_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: sharepoint-sync-secret
+                  key: SHAREPOINT_DATABASE_URL
+            - name: SHAREPOINT_RETENTION_DAYS
+              valueFrom:
+                configMapKeyRef:
+                  name: sharepoint-sync-config
+                  key: SHAREPOINT_RETENTION_DAYS
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: sharepoint-sync-config
+                  key: LOG_LEVEL
+            - name: LOG_FORMAT
+              valueFrom:
+                configMapKeyRef:
+                  name: sharepoint-sync-config
+                  key: LOG_FORMAT
+            volumeMounts:
+            - name: logs-volume
+              mountPath: /app/logs
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "200m"
+              limits:
+                memory: "512Mi"
+                cpu: "500m"
+          volumes:
+          - name: logs-volume
+            emptyDir: {}
+          restartPolicy: OnFailure
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+
+

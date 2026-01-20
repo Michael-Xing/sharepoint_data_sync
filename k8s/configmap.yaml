@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sharepoint-sync-config
+  namespace: default
+data:
+  SHAREPOINT_SITE_URL: "https://yourtenant.sharepoint.cn/sites/yoursite"
+  SHAREPOINT_AUTHORITY_URL: "https://login.partner.microsoftonline.cn"
+  SHAREPOINT_SYNC_FOLDERS_PATTERN: "开发-*"
+  SHAREPOINT_LOCAL_SYNC_PATH: "/app/data"
+  SHAREPOINT_RETENTION_DAYS: "7"
+  SHAREPOINT_BATCH_SIZE: "100"
+  SHAREPOINT_MAX_CONCURRENT_DOWNLOADS: "5"
+  SHAREPOINT_SYNC_INTERVAL_MINUTES: "60"
+  SHAREPOINT_CLEANUP_INTERVAL_HOURS: "24"
+  LOG_LEVEL: "INFO"
+  LOG_FORMAT: "%(time)s | %(level)s | %(name)s | %(message)s"
+
+

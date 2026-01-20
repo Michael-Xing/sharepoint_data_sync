@@ -1,0 +1,100 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sharepoint-sync-job
+  namespace: default
+spec:
+  schedule: "0 */1 * * *"  # Every hour, adjust as needed
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: sharepoint-sync-job
+            image: your-registry/sharepoint-sync:latest  # Replace with your image
+            imagePullPolicy: Always
+            command: ["uv", "run", "python", "main.py", "sync"]
+            env:
+            - name: SHAREPOINT_SITE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: sharepoint-sync-config
+                  key: SHAREPOINT_SITE_URL
+            - name: SHAREPOINT_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: sharepoint-sync-secret
+                  key: SHAREPOINT_CLIENT_ID
+            - name: SHAREPOINT_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: sharepoint-sync-secret
+                  key: SHAREPOINT_CLIENT_SECRET
+            - name: SHAREPOINT_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: sharepoint-sync-secret
+                  key: SHAREPOINT_TENANT_ID
+            - name: SHAREPOINT_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: sharepoint-sync-secret
+                  key: SHAREPOINT_DATABASE_URL
+            - name: SHAREPOINT_AUTHORITY_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: sharepoint-sync-config
+                  key: SHAREPOINT_AUTHORITY_URL
+            - name: SHAREPOINT_SYNC_FOLDERS_PATTERN
+              valueFrom:
+                configMapKeyRef:
+                  name: sharepoint-sync-config
+                  key: SHAREPOINT_SYNC_FOLDERS_PATTERN
+            - name: SHAREPOINT_RETENTION_DAYS
+              valueFrom:
+                configMapKeyRef:
+                  name: sharepoint-sync-config
+                  key: SHAREPOINT_RETENTION_DAYS
+            - name: SHAREPOINT_BATCH_SIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: sharepoint-sync-config
+                  key: SHAREPOINT_BATCH_SIZE
+            - name: SHAREPOINT_MAX_CONCURRENT_DOWNLOADS
+              valueFrom:
+                configMapKeyRef:
+                  name: sharepoint-sync-config
+                  key: SHAREPOINT_MAX_CONCURRENT_DOWNLOADS
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: sharepoint-sync-config
+                  key: LOG_LEVEL
+            - name: LOG_FORMAT
+              valueFrom:
+                configMapKeyRef:
+                  name: sharepoint-sync-config
+                  key: LOG_FORMAT
+            volumeMounts:
+            - name: data-volume
+              mountPath: /app/data
+            - name: logs-volume
+              mountPath: /app/logs
+            resources:
+              requests:
+                memory: "512Mi"
+                cpu: "500m"
+              limits:
+                memory: "2Gi"
+                cpu: "2000m"
+          volumes:
+          - name: data-volume
+            persistentVolumeClaim:
+              claimName: sharepoint-sync-data
+          - name: logs-volume
+            emptyDir: {}
+          restartPolicy: OnFailure
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+
+

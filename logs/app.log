@@ -1,0 +1,637 @@
+%(time)s | %(level)s | %(name)s | %(message)s
+%(time)s | %(level)s | %(name)s | %(message)s
+%(time)s | %(level)s | %(name)s | %(message)s
+%(time)s | %(level)s | %(name)s | %(message)s
+%(time)s | %(level)s | %(name)s | %(message)s
+%(time)s | %(level)s | %(name)s | %(message)s
+%(time)s | %(level)s | %(name)s | %(message)s
+%(time)s | %(level)s | %(name)s | %(message)s
+%(time)s | %(level)s | %(name)s | %(message)s
+%(time)s | %(level)s | %(name)s | %(message)s
+%(time)s | %(level)s | %(name)s | %(message)s
+%(time)s | %(level)s | %(name)s | %(message)s
+2026-01-19T13:32:37.262504+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T13:32:37.262997+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T13:32:37.264006+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T13:32:39.099404+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: c0885c42-be4b-48bc-bb42-5956b2635700 Correlation ID: 7a748893-81bb-48cb-b077-f13451070f1d Timestamp: 2026-01-19 05:32:38Z","error_codes":[90002],"timestamp":"2026-01-19 05:32:38Z","trace_id":"c0885c42-be4b-48bc-bb42-5956b2635700","correlation_id":"7a748893-81bb-48cb-b077-f13451070f1d","error_uri":"https://accounts.accesscontrol.windows.net/error?code=90002"}
+2026-01-19T13:32:39.102580+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T13:33:58.302993+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T13:33:58.303404+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T13:33:58.304367+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T13:34:00.168218+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 66544e53-9e43-400e-8b7d-6ab330a52c00 Correlation ID: 7086ec72-d418-4196-86e8-0c6bd59b395e Timestamp: 2026-01-19 05:34:00Z","error_codes":[90002],"timestamp":"2026-01-19 05:34:00Z","trace_id":"66544e53-9e43-400e-8b7d-6ab330a52c00","correlation_id":"7086ec72-d418-4196-86e8-0c6bd59b395e","error_uri":"https://accounts.accesscontrol.windows.net/error?code=90002"}
+2026-01-19T13:34:00.169464+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T13:36:05.968494+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T13:36:05.981324+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T13:36:05.989503+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T13:36:07.137980+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: f1a976af-6ab8-4c4c-9e9b-a89a04d30b00 Correlation ID: 969f9399-e2d9-475f-a7c2-9eb44e81c27f Timestamp: 2026-01-19 05:36:06Z","error_codes":[90002],"timestamp":"2026-01-19 05:36:06Z","trace_id":"f1a976af-6ab8-4c4c-9e9b-a89a04d30b00","correlation_id":"969f9399-e2d9-475f-a7c2-9eb44e81c27f","error_uri":"https://accounts.accesscontrol.windows.net/error?code=90002"}
+2026-01-19T13:36:07.139800+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T13:51:22.355132+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T13:51:22.355466+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T13:51:22.357581+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T13:51:27.679434+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: Acquire app-only access token failed.
+2026-01-19T13:51:27.680141+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T13:51:39.932910+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T13:51:39.933247+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T13:51:39.934295+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T13:51:58.763148+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: Acquire app-only access token failed.
+2026-01-19T13:51:58.763623+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T13:52:57.619164+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T13:52:57.619731+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T13:52:57.620768+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T13:54:27.847159+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: Acquire app-only access token failed.
+2026-01-19T13:54:27.848813+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T14:03:48.268669+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T14:03:48.269024+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T14:03:48.487163+0800 | INFO | omd_sharepoint_data.sharepoint_client | Successfully obtained access token for China region
+2026-01-19T14:03:48.487365+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context with manual token for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T14:03:48.563980+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: 'str' object is not callable
+2026-01-19T14:03:48.564094+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T14:11:58.028200+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T14:11:58.028608+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T14:11:58.030749+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T14:11:59.158196+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 2ab66495-0d99-4ef5-b4ad-fda88aac6100 Correlation ID: 71fb8470-16a0-4a9e-ad3e-43292ad35275 Timestamp: 2026-01-19 06:11:58Z","error_codes":[90002],"timestamp":"2026-01-19 06:11:58Z","trace_id":"2ab66495-0d99-4ef5-b4ad-fda88aac6100","correlation_id":"71fb8470-16a0-4a9e-ad3e-43292ad35275","error_uri":"https://accounts.accesscontrol.windows.net/error?code=90002"}
+2026-01-19T14:11:59.162801+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T14:11:59.163016+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T14:16:20.888099+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T14:16:20.888628+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T14:16:20.889666+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T14:16:22.447759+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: cb83ad12-ce23-4871-8688-782007d03400 Correlation ID: 33fb8977-f3c9-4088-bea7-72d44ee3a9ab Timestamp: 2026-01-19 06:16:22Z","error_codes":[90002],"timestamp":"2026-01-19 06:16:22Z","trace_id":"cb83ad12-ce23-4871-8688-782007d03400","correlation_id":"33fb8977-f3c9-4088-bea7-72d44ee3a9ab","error_uri":"https://accounts.accesscontrol.windows.net/error?code=90002"}
+2026-01-19T14:16:22.454255+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T14:16:22.454373+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T14:16:46.710584+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T14:16:46.711105+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T14:16:46.712176+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T14:16:48.283184+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 178aa98b-c8ba-471e-ad79-29fd156e3c00 Correlation ID: abddffe5-4c09-432b-a1fe-3db7f2a6818d Timestamp: 2026-01-19 06:16:48Z","error_codes":[90002],"timestamp":"2026-01-19 06:16:48Z","trace_id":"178aa98b-c8ba-471e-ad79-29fd156e3c00","correlation_id":"abddffe5-4c09-432b-a1fe-3db7f2a6818d","error_uri":"https://accounts.accesscontrol.windows.net/error?code=90002"}
+2026-01-19T14:16:48.289175+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T14:16:48.289340+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T14:27:15.928784+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T14:27:15.929104+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T14:27:15.930189+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T14:27:16.931057+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 76407b15-bc05-4fca-bd9e-264fe58a0400 Correlation ID: efb9b3d5-ce3c-405f-b997-4890273bcc77 Timestamp: 2026-01-19 06:27:16Z","error_codes":[90002],"timestamp":"2026-01-19 06:27:16Z","trace_id":"76407b15-bc05-4fca-bd9e-264fe58a0400","correlation_id":"efb9b3d5-ce3c-405f-b997-4890273bcc77","error_uri":"https://accounts.accesscontrol.windows.net/error?code=90002"}
+2026-01-19T14:27:16.938855+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T14:27:16.939058+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T14:27:49.488477+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T14:27:49.488815+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T14:27:49.489830+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Creating ClientCredential with client_id: a85c904f-667e-4d55-8f13-e194fc8850eb
+2026-01-19T14:27:49.489877+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Created credentials: <class 'office365.runtime.auth.client_credential.ClientCredential'>
+2026-01-19T14:27:49.489906+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Creating ClientContext for site: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T14:27:49.489942+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Created ctx: <class 'office365.sharepoint.client_context.ClientContext'>
+2026-01-19T14:27:49.489970+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | No auth_context found or auth_context is None
+2026-01-19T14:27:49.489995+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T14:27:49.567273+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Testing connection with ctx type: <class 'office365.sharepoint.client_context.ClientContext'>
+2026-01-19T14:27:49.567388+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Got web object: <class 'office365.sharepoint.webs.web.Web'>
+2026-01-19T14:27:49.567431+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Called ctx.load()
+2026-01-19T14:27:50.746351+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: ae7f16f8-e5ce-4854-851c-9c2f80620d00 Correlation ID: 3fedc628-0097-4579-925e-f7f4a718638a Timestamp: 2026-01-19 06:27:50Z","error_codes":[90002],"timestamp":"2026-01-19 06:27:50Z","trace_id":"ae7f16f8-e5ce-4854-851c-9c2f80620d00","correlation_id":"3fedc628-0097-4579-925e-f7f4a718638a","error_uri":"https://accounts.accesscontrol.windows.net/error?code=90002"}
+2026-01-19T14:27:50.746486+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Exception type: <class 'ValueError'>
+2026-01-19T14:27:50.749943+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Traceback: Traceback (most recent call last):
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/auth/providers/acs_token_provider.py", line 44, in get_app_only_access_token
+    return self._get_app_only_access_token(url_info.hostname, realm)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/auth/providers/acs_token_provider.py", line 78, in _get_app_only_access_token
+    response.raise_for_status()
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://accounts.accesscontrol.windows.net/c4230186-a3b7-45b2-8e88-4800d28b7e30/tokens/OAuth/2
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/src/omd_sharepoint_data/sharepoint_client.py", line 130, in test_connection
+    self.ctx.execute_query()
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_runtime_context.py", line 173, in execute_query
+    self.pending_request().execute_query(qry)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_request.py", line 37, in execute_query
+    response = self.execute_request_direct(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_request.py", line 46, in execute_request_direct
+    self.beforeExecute.notify(request)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/types/event_handler.py", line 41, in notify
+    listener(*args, **kwargs)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/sharepoint/client_context.py", line 272, in _authenticate_request
+    self.authentication_context.authenticate_request(request)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/auth/authentication_context.py", line 275, in authenticate_request
+    self._authenticate(request)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/auth/authentication_context.py", line 229, in _authenticate
+    provider.authenticate_request(request)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/auth/providers/acs_token_provider.py", line 36, in authenticate_request
+    self._cached_token = self.get_app_only_access_token()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/auth/providers/acs_token_provider.py", line 51, in get_app_only_access_token
+    raise ValueError(self.error)
+ValueError: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: ae7f16f8-e5ce-4854-851c-9c2f80620d00 Correlation ID: 3fedc628-0097-4579-925e-f7f4a718638a Timestamp: 2026-01-19 06:27:50Z","error_codes":[90002],"timestamp":"2026-01-19 06:27:50Z","trace_id":"ae7f16f8-e5ce-4854-851c-9c2f80620d00","correlation_id":"3fedc628-0097-4579-925e-f7f4a718638a","error_uri":"https://accounts.accesscontrol.windows.net/error?code=90002"}
+
+2026-01-19T14:27:50.751022+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T14:27:50.751111+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T14:35:13.294689+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T14:35:13.295030+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T14:35:13.296141+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Requesting token from: https://login.chinacloudapi.cn/c4230186-a3b7-45b2-8e88-4800d28b7e30/oauth2/token
+2026-01-19T14:35:13.296194+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Client ID: a85c904f-667e-4d55-8f13-e194fc8850eb
+2026-01-19T14:35:13.296225+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Tenant ID: c4230186-a3b7-45b2-8e88-4800d28b7e30
+2026-01-19T14:35:13.501007+0800 | INFO | omd_sharepoint_data.sharepoint_client | Successfully obtained access token for China region
+2026-01-19T14:35:13.501172+0800 | INFO | omd_sharepoint_data.sharepoint_client | Using manually obtained access token for China region authentication
+2026-01-19T14:35:13.501267+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context with manual token for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T14:35:13.575234+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Testing connection with ctx type: <class 'office365.sharepoint.client_context.ClientContext'>
+2026-01-19T14:35:13.575400+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Got web object: <class 'office365.sharepoint.webs.web.Web'>
+2026-01-19T14:35:13.575447+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Called ctx.load()
+2026-01-19T14:35:13.575526+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: 'str' object is not callable
+2026-01-19T14:35:13.575643+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Exception type: <class 'TypeError'>
+2026-01-19T14:35:13.577805+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Traceback: Traceback (most recent call last):
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/src/omd_sharepoint_data/sharepoint_client.py", line 130, in test_connection
+    self.ctx.execute_query()
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_runtime_context.py", line 173, in execute_query
+    self.pending_request().execute_query(qry)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_request.py", line 37, in execute_query
+    response = self.execute_request_direct(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_request.py", line 46, in execute_request_direct
+    self.beforeExecute.notify(request)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/types/event_handler.py", line 41, in notify
+    listener(*args, **kwargs)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/sharepoint/client_context.py", line 272, in _authenticate_request
+    self.authentication_context.authenticate_request(request)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/auth/authentication_context.py", line 275, in authenticate_request
+    self._authenticate(request)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/auth/authentication_context.py", line 187, in _authenticate
+    self._cached_token = token_func()
+                         ^^^^^^^^^^^^
+TypeError: 'str' object is not callable
+
+2026-01-19T14:35:13.577947+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T14:35:13.577991+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T14:37:46.211704+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T14:37:46.212022+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T14:37:46.213132+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Requesting token from: https://login.chinacloudapi.cn/c4230186-a3b7-45b2-8e88-4800d28b7e30/oauth2/token
+2026-01-19T14:37:46.213188+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Client ID: a85c904f-667e-4d55-8f13-e194fc8850eb
+2026-01-19T14:37:46.213219+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Tenant ID: c4230186-a3b7-45b2-8e88-4800d28b7e30
+2026-01-19T14:37:46.349619+0800 | INFO | omd_sharepoint_data.sharepoint_client | Successfully obtained access token for China region
+2026-01-19T14:37:46.349792+0800 | INFO | omd_sharepoint_data.sharepoint_client | Using manually obtained access token for China region authentication
+2026-01-19T14:37:46.349867+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context with manual token for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T14:37:46.424883+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Testing connection with ctx type: <class 'office365.sharepoint.client_context.ClientContext'>
+2026-01-19T14:37:46.427485+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Got web object: <class 'office365.sharepoint.webs.web.Web'>
+2026-01-19T14:37:46.427626+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Called ctx.load()
+2026-01-19T14:37:46.600847+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: (None, None, '401 Client Error: Unauthorized for url: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004/_api/Web')
+2026-01-19T14:37:46.600973+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Exception type: <class 'office365.runtime.client_request_exception.ClientRequestException'>
+2026-01-19T14:37:46.604763+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Traceback: Traceback (most recent call last):
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_request.py", line 37, in execute_query
+    response = self.execute_request_direct(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_request.py", line 101, in execute_request_direct
+    response.raise_for_status()
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004/_api/Web
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/src/omd_sharepoint_data/sharepoint_client.py", line 139, in test_connection
+    self.ctx.execute_query()
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_runtime_context.py", line 173, in execute_query
+    self.pending_request().execute_query(qry)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_request.py", line 41, in execute_query
+    raise ClientRequestException(*e.args, response=e.response)
+office365.runtime.client_request_exception.ClientRequestException: (None, None, '401 Client Error: Unauthorized for url: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004/_api/Web')
+
+2026-01-19T14:37:46.605419+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T14:37:46.605481+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T14:48:16.888997+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T14:48:16.889370+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T14:48:16.890494+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Requesting token from: https://login.chinacloudapi.cn/c4230186-a3b7-45b2-8e88-4800d28b7e30/oauth2/token
+2026-01-19T14:48:16.890548+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Client ID: a85c904f-667e-4d55-8f13-e194fc8850eb
+2026-01-19T14:48:16.890580+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Tenant ID: c4230186-a3b7-45b2-8e88-4800d28b7e30
+2026-01-19T14:48:16.890608+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Resource: https://omroncn.sharepoint.cn
+2026-01-19T14:48:17.157508+0800 | INFO | omd_sharepoint_data.sharepoint_client | Successfully obtained access token for China region
+2026-01-19T14:48:17.158726+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Token length: 1576
+2026-01-19T14:48:17.158953+0800 | INFO | omd_sharepoint_data.sharepoint_client | Using manually obtained access token for China region authentication
+2026-01-19T14:48:17.159481+0800 | INFO | omd_sharepoint_data.sharepoint_client | Created SharePoint client context with manual token for China region: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004
+2026-01-19T14:48:17.239288+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Testing connection with ctx type: <class 'office365.sharepoint.client_context.ClientContext'>
+2026-01-19T14:48:17.239416+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Got web object: <class 'office365.sharepoint.webs.web.Web'>
+2026-01-19T14:48:17.239461+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Called ctx.load()
+2026-01-19T14:48:17.572803+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: Authentication failed (401 Unauthorized)
+2026-01-19T14:48:17.572921+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Please check:
+2026-01-19T14:48:17.572955+0800 | ERROR | omd_sharepoint_data.sharepoint_client |   1. Azure AD app has Sites.ReadWrite.All permission for SharePoint
+2026-01-19T14:48:17.572982+0800 | ERROR | omd_sharepoint_data.sharepoint_client |   2. SharePoint site allows app-only access
+2026-01-19T14:48:17.573009+0800 | ERROR | omd_sharepoint_data.sharepoint_client |   3. Access token is valid and not expired
+2026-01-19T14:48:17.573035+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Exception type: <class 'office365.runtime.client_request_exception.ClientRequestException'>
+2026-01-19T14:48:17.575231+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Traceback: Traceback (most recent call last):
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_request.py", line 37, in execute_query
+    response = self.execute_request_direct(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_request.py", line 101, in execute_request_direct
+    response.raise_for_status()
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004/_api/Web
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/src/omd_sharepoint_data/sharepoint_client.py", line 157, in test_connection
+    self.ctx.execute_query()
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_runtime_context.py", line 173, in execute_query
+    self.pending_request().execute_query(qry)
+  File "/Users/xingmingbo/Documents/工作/Daocloud/object/omd-sharepoint-data/.venv/lib/python3.12/site-packages/office365/runtime/client_request.py", line 41, in execute_query
+    raise ClientRequestException(*e.args, response=e.response)
+office365.runtime.client_request_exception.ClientRequestException: (None, None, '401 Client Error: Unauthorized for url: https://omroncn.sharepoint.cn/sites/mcm_OMD_00004/_api/Web')
+
+2026-01-19T14:48:17.575856+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T14:48:17.575918+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T14:59:44.201708+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T14:59:44.201997+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T14:59:44.204377+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Creating ClientSecretCredential for China region
+2026-01-19T14:59:48.622387+0800 | INFO | omd_sharepoint_data.sharepoint_client | Successfully created Microsoft Graph client for China region
+2026-01-19T14:59:48.666655+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Testing connection to SharePoint via Microsoft Graph API
+2026-01-19T14:59:49.929284+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Site lookup failed: Microsoft Entra ID error '(invalid_request) AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 25b816d0-f814-48a2-a908-4569c1c13200 Correlation ID: 00172c79-29bc-4db7-8558-17ccaa137180 Timestamp: 2026-01-19 06:59:49Z'
+Content: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 25b816d0-f814-48a2-a908-4569c1c13200 Correlation ID: 00172c79-29bc-4db7-8558-17ccaa137180 Timestamp: 2026-01-19 06:59:49Z","error_codes":[90002],"timestamp":"2026-01-19 06:59:49Z","trace_id":"25b816d0-f814-48a2-a908-4569c1c13200","correlation_id":"00172c79-29bc-4db7-8558-17ccaa137180","error_uri":"https://login.microsoftonline.com/error?code=90002"}
+2026-01-19T14:59:50.239453+0800 | ERROR | omd_sharepoint_data.sharepoint_client | Failed to connect to SharePoint: Microsoft Entra ID error '(invalid_request) AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 744b3688-0300-4164-8b13-bc80edeb5e00 Correlation ID: 82029df3-6294-48db-a2f2-f5eee865d016 Timestamp: 2026-01-19 06:59:50Z'
+Content: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 744b3688-0300-4164-8b13-bc80edeb5e00 Correlation ID: 82029df3-6294-48db-a2f2-f5eee865d016 Timestamp: 2026-01-19 06:59:50Z","error_codes":[90002],"timestamp":"2026-01-19 06:59:50Z","trace_id":"744b3688-0300-4164-8b13-bc80edeb5e00","correlation_id":"82029df3-6294-48db-a2f2-f5eee865d016","error_uri":"https://login.microsoftonline.com/error?code=90002"}
+2026-01-19T14:59:50.239766+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T14:59:50.239826+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T15:08:15.282237+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T15:08:15.282551+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T15:08:16.165871+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_request) AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 1d683e8a-d29f-4d0a-abe7-06528bb93e00 Correlation ID: 2a54205c-ab2e-45ae-b26f-b40bcfe70e17 Timestamp: 2026-01-19 07:08:16Z'
+Content: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 1d683e8a-d29f-4d0a-abe7-06528bb93e00 Correlation ID: 2a54205c-ab2e-45ae-b26f-b40bcfe70e17 Timestamp: 2026-01-19 07:08:16Z","error_codes":[90002],"timestamp":"2026-01-19 07:08:16Z","trace_id":"1d683e8a-d29f-4d0a-abe7-06528bb93e00","correlation_id":"2a54205c-ab2e-45ae-b26f-b40bcfe70e17","error_uri":"https://login.microsoftonline.com/error?code=90002"}
+2026-01-19T15:08:16.166656+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T15:08:16.166862+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T15:16:25.605543+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T15:16:25.605711+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T15:16:26.649636+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_request) AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 6e017a58-fc58-4596-96d1-8fd28cec0b00 Correlation ID: 0e18f792-6360-4a4b-9391-61ca9bd4480d Timestamp: 2026-01-19 07:16:26Z'
+Content: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 6e017a58-fc58-4596-96d1-8fd28cec0b00 Correlation ID: 0e18f792-6360-4a4b-9391-61ca9bd4480d Timestamp: 2026-01-19 07:16:26Z","error_codes":[90002],"timestamp":"2026-01-19 07:16:26Z","trace_id":"6e017a58-fc58-4596-96d1-8fd28cec0b00","correlation_id":"0e18f792-6360-4a4b-9391-61ca9bd4480d","error_uri":"https://login.microsoftonline.com/error?code=90002"}
+2026-01-19T15:16:26.650078+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T15:16:26.650143+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T15:19:56.856521+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T15:19:56.856892+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T15:19:57.993657+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_scope) AADSTS70011: The provided request must include a 'scope' input parameter. The provided value for the input parameter 'scope' is not valid. The scope https://login.chinacloudapi.cn is not valid. Trace ID: db21e210-2b4c-4aef-b697-4b33df813600 Correlation ID: 77ef42cd-82ae-4da4-8c80-ef5b77767b88 Timestamp: 2026-01-19 07:19:57Z'
+Content: {"error":"invalid_scope","error_description":"AADSTS70011: The provided request must include a 'scope' input parameter. The provided value for the input parameter 'scope' is not valid. The scope https://login.chinacloudapi.cn is not valid. Trace ID: db21e210-2b4c-4aef-b697-4b33df813600 Correlation ID: 77ef42cd-82ae-4da4-8c80-ef5b77767b88 Timestamp: 2026-01-19 07:19:57Z","error_codes":[70011],"timestamp":"2026-01-19 07:19:57Z","trace_id":"db21e210-2b4c-4aef-b697-4b33df813600","correlation_id":"77ef42cd-82ae-4da4-8c80-ef5b77767b88"}
+2026-01-19T15:19:57.994006+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T15:19:57.994074+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T15:23:09.130520+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T15:23:09.130862+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T15:23:09.922974+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_request) AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: f9e3743b-4aaf-4a6c-8b13-83d2b4591400 Correlation ID: 6efa4c28-842e-40fe-957e-6312332285e8 Timestamp: 2026-01-19 07:23:09Z'
+Content: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: f9e3743b-4aaf-4a6c-8b13-83d2b4591400 Correlation ID: 6efa4c28-842e-40fe-957e-6312332285e8 Timestamp: 2026-01-19 07:23:09Z","error_codes":[90002],"timestamp":"2026-01-19 07:23:09Z","trace_id":"f9e3743b-4aaf-4a6c-8b13-83d2b4591400","correlation_id":"6efa4c28-842e-40fe-957e-6312332285e8","error_uri":"https://login.microsoftonline.com/error?code=90002"}
+2026-01-19T15:23:09.923513+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T15:23:09.923598+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T15:25:09.633041+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T15:25:09.633198+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T15:25:10.537575+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_request) AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 40214253-11a0-424b-b33b-4f391fc56600 Correlation ID: b7200a21-cd71-4617-b643-2adf7e37a324 Timestamp: 2026-01-19 07:25:10Z'
+Content: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 40214253-11a0-424b-b33b-4f391fc56600 Correlation ID: b7200a21-cd71-4617-b643-2adf7e37a324 Timestamp: 2026-01-19 07:25:10Z","error_codes":[90002],"timestamp":"2026-01-19 07:25:10Z","trace_id":"40214253-11a0-424b-b33b-4f391fc56600","correlation_id":"b7200a21-cd71-4617-b643-2adf7e37a324","error_uri":"https://login.microsoftonline.com/error?code=90002"}
+2026-01-19T15:25:10.538005+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T15:25:10.538077+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T15:31:43.573001+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T15:31:43.573334+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T15:31:44.402214+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_request) AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 031e9c2f-39fc-482a-a1a8-956968760a00 Correlation ID: 4f6ccb25-bf19-4b48-bca9-b0748c34a298 Timestamp: 2026-01-19 07:31:44Z'
+Content: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 031e9c2f-39fc-482a-a1a8-956968760a00 Correlation ID: 4f6ccb25-bf19-4b48-bca9-b0748c34a298 Timestamp: 2026-01-19 07:31:44Z","error_codes":[90002],"timestamp":"2026-01-19 07:31:44Z","trace_id":"031e9c2f-39fc-482a-a1a8-956968760a00","correlation_id":"4f6ccb25-bf19-4b48-bca9-b0748c34a298","error_uri":"https://login.microsoftonline.com/error?code=90002"}
+2026-01-19T15:31:44.402581+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T15:31:44.402714+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T15:41:26.126490+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T15:41:26.126668+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T15:41:26.350648+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T15:41:27.289240+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_request) AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 083b0b1e-a1e0-457e-815b-46f23e851300 Correlation ID: ec1ae27c-329c-44ba-b378-e18302701302 Timestamp: 2026-01-19 07:41:27Z'
+Content: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 083b0b1e-a1e0-457e-815b-46f23e851300 Correlation ID: ec1ae27c-329c-44ba-b378-e18302701302 Timestamp: 2026-01-19 07:41:27Z","error_codes":[90002],"timestamp":"2026-01-19 07:41:27Z","trace_id":"083b0b1e-a1e0-457e-815b-46f23e851300","correlation_id":"ec1ae27c-329c-44ba-b378-e18302701302","error_uri":"https://login.microsoftonline.com/error?code=90002"}
+2026-01-19T15:41:27.289440+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T15:41:27.289539+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T15:52:43.148217+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T15:52:43.148683+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T15:52:43.367671+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T15:52:43.960012+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_request) AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 1f114bae-aed1-4587-a4d3-31c8ba1f3d00 Correlation ID: 54870eee-2fc3-47eb-9285-ebb964bdec84 Timestamp: 2026-01-19 07:52:43Z'
+Content: {"error":"invalid_request","error_description":"AADSTS90002: Tenant 'c4230186-a3b7-45b2-8e88-4800d28b7e30' not found. Check to make sure you have the correct tenant ID and are signing into the correct cloud. Check with your subscription administrator, this may happen if there are no active subscriptions for the tenant. Trace ID: 1f114bae-aed1-4587-a4d3-31c8ba1f3d00 Correlation ID: 54870eee-2fc3-47eb-9285-ebb964bdec84 Timestamp: 2026-01-19 07:52:43Z","error_codes":[90002],"timestamp":"2026-01-19 07:52:43Z","trace_id":"1f114bae-aed1-4587-a4d3-31c8ba1f3d00","correlation_id":"54870eee-2fc3-47eb-9285-ebb964bdec84","error_uri":"https://login.microsoftonline.com/error?code=90002"}
+2026-01-19T15:52:43.960538+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T15:52:43.960618+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T16:32:19.155283+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T16:32:19.155959+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T16:32:19.375355+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T16:32:20.257692+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='3846fe4e-a527-45d2-b476-be66877d99d2', date=datetime.datetime(2026, 1, 19, 8, 32, 20), odata_type=None, request_id='1b131580-096f-434a-9ad2-f83a19444dd4'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T16:32:20.257871+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T16:32:20.257929+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T16:36:01.278869+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T16:36:01.279206+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T16:36:01.491576+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T16:36:02.064604+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='d25fe550-ad59-4084-9632-2458ad2c3826', date=datetime.datetime(2026, 1, 19, 8, 36, 2), odata_type=None, request_id='b6f6cea7-9949-4c9e-b5c8-9ffdaba8ff41'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T16:36:02.064774+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T16:36:02.064819+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T16:36:14.465091+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T16:36:14.465487+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T16:36:14.692759+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T16:36:15.392854+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='06a0fec8-59e2-490e-af68-e75b72d30e06', date=datetime.datetime(2026, 1, 19, 8, 36, 15), odata_type=None, request_id='62b9f4ff-9bb0-4679-9d03-f1a2b5efd438'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T16:36:15.393085+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T16:36:15.393130+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T16:41:44.240818+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T16:41:44.241161+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T16:41:44.453927+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T16:41:44.652722+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_scope) AADSTS1002012: The provided value for scope https://microsoftgraph.chinacloudapi.cn/Sites.ReadWrite.All is not valid. Client credential flows must have a scope value with /.default suffixed to the resource identifier (application ID URI). Trace ID: bb1a93a4-3ecb-4f35-a1ec-1359f4061200 Correlation ID: ae612f41-63da-4787-87ea-b420309bcefd Timestamp: 2026-01-19 08:41:44Z'
+Content: {"error":"invalid_scope","error_description":"AADSTS1002012: The provided value for scope https://microsoftgraph.chinacloudapi.cn/Sites.ReadWrite.All is not valid. Client credential flows must have a scope value with /.default suffixed to the resource identifier (application ID URI). Trace ID: bb1a93a4-3ecb-4f35-a1ec-1359f4061200 Correlation ID: ae612f41-63da-4787-87ea-b420309bcefd Timestamp: 2026-01-19 08:41:44Z","error_codes":[1002012],"timestamp":"2026-01-19 08:41:44Z","trace_id":"bb1a93a4-3ecb-4f35-a1ec-1359f4061200","correlation_id":"ae612f41-63da-4787-87ea-b420309bcefd"}
+2026-01-19T16:41:44.652912+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T16:41:44.653013+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T16:44:56.048833+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T16:44:56.049017+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T16:44:56.265450+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T16:44:56.768802+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='b12fbc15-749d-4fa9-a9dc-38f556092b8e', date=datetime.datetime(2026, 1, 19, 8, 44, 56), odata_type=None, request_id='cbd0b4a2-7d59-470f-8465-947ce20cd674'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T16:44:56.768958+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T16:44:56.769000+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T16:49:59.489305+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T16:49:59.489550+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T16:49:59.713029+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T16:49:59.911531+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_scope) AADSTS70011: The provided request must include a 'scope' input parameter. The provided value for the input parameter 'scope' is not valid. The scope https://microsoftgraph.chinacloudapi.cn/.default https://omroncn.sharepoint.cn/.default is not valid. Trace ID: cc3c08a7-7abc-40a1-92da-a76115624800 Correlation ID: fd2840d7-90db-4238-9e7c-45c7df2d8def Timestamp: 2026-01-19 08:49:59Z'
+Content: {"error":"invalid_scope","error_description":"AADSTS70011: The provided request must include a 'scope' input parameter. The provided value for the input parameter 'scope' is not valid. The scope https://microsoftgraph.chinacloudapi.cn/.default https://omroncn.sharepoint.cn/.default is not valid. Trace ID: cc3c08a7-7abc-40a1-92da-a76115624800 Correlation ID: fd2840d7-90db-4238-9e7c-45c7df2d8def Timestamp: 2026-01-19 08:49:59Z","error_codes":[70011],"timestamp":"2026-01-19 08:49:59Z","trace_id":"cc3c08a7-7abc-40a1-92da-a76115624800","correlation_id":"fd2840d7-90db-4238-9e7c-45c7df2d8def"}
+2026-01-19T16:49:59.912959+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T16:49:59.913224+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T16:50:41.266550+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T16:50:41.266749+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T16:50:41.478958+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T16:50:42.242174+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='b69d74c1-b6d0-407a-b664-47f1fa89cf0f', date=datetime.datetime(2026, 1, 19, 8, 50, 42), odata_type=None, request_id='79f21a1f-f25a-4c93-9fbf-a8a43faa32ea'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T16:50:42.242298+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T16:50:42.242349+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T17:03:53.870394+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T17:03:53.870801+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T17:03:54.111651+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T17:03:54.260291+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_resource) AADSTS500011: The resource principal named https://graph.microsoft.com was not found in the tenant named 欧姆龙（中国）有限公司上海分公司. This can happen if the application has not been installed by the administrator of the tenant or consented to by any user in the tenant. You might have sent your authentication request to the wrong tenant. Trace ID: 3ab8bddf-8fa3-4074-b16e-839fba816000 Correlation ID: 9c09f91a-d52d-47e3-b188-1c8c92db4ebc Timestamp: 2026-01-19 09:03:54Z'
+Content: {"error":"invalid_resource","error_description":"AADSTS500011: The resource principal named https://graph.microsoft.com was not found in the tenant named 欧姆龙（中国）有限公司上海分公司. This can happen if the application has not been installed by the administrator of the tenant or consented to by any user in the tenant. You might have sent your authentication request to the wrong tenant. Trace ID: 3ab8bddf-8fa3-4074-b16e-839fba816000 Correlation ID: 9c09f91a-d52d-47e3-b188-1c8c92db4ebc Timestamp: 2026-01-19 09:03:54Z","error_codes":[500011],"timestamp":"2026-01-19 09:03:54Z","trace_id":"3ab8bddf-8fa3-4074-b16e-839fba816000","correlation_id":"9c09f91a-d52d-47e3-b188-1c8c92db4ebc","error_uri":"https://login.chinacloudapi.cn/error?code=500011"}
+2026-01-19T17:03:54.263520+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T17:03:54.263607+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T17:10:13.451844+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T17:10:13.452199+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T17:10:13.592646+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T17:10:13.908625+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: 'FreshTokenCredential' object has no attribute 'close'
+2026-01-19T17:10:13.908764+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T17:10:13.908823+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T17:13:03.826578+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T17:13:03.826764+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T17:13:03.960558+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T17:13:05.197124+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='d755e46c-b813-42ea-9c90-d1b3b11a5b7d', date=datetime.datetime(2026, 1, 19, 9, 13, 4), odata_type=None, request_id='063aa48b-2227-4150-96d8-b08b8f865ccc'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T17:13:05.197247+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T17:13:05.197288+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T17:16:54.588986+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T17:16:54.589343+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T17:16:54.719799+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T17:16:54.992337+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_scope) AADSTS1002012: The provided value for scope https://microsoftgraph.chinacloudapi.cn/Domain.Read.All is not valid. Client credential flows must have a scope value with /.default suffixed to the resource identifier (application ID URI). Trace ID: 4d05d284-8bb9-471d-9809-7dd744ed4c00 Correlation ID: 2d4833f5-beaf-49c5-935f-46dfee633226 Timestamp: 2026-01-19 09:16:55Z'
+Content: {"error":"invalid_scope","error_description":"AADSTS1002012: The provided value for scope https://microsoftgraph.chinacloudapi.cn/Domain.Read.All is not valid. Client credential flows must have a scope value with /.default suffixed to the resource identifier (application ID URI). Trace ID: 4d05d284-8bb9-471d-9809-7dd744ed4c00 Correlation ID: 2d4833f5-beaf-49c5-935f-46dfee633226 Timestamp: 2026-01-19 09:16:55Z","error_codes":[1002012],"timestamp":"2026-01-19 09:16:55Z","trace_id":"4d05d284-8bb9-471d-9809-7dd744ed4c00","correlation_id":"2d4833f5-beaf-49c5-935f-46dfee633226"}
+2026-01-19T17:16:54.992689+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T17:16:54.992740+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T17:18:05.380821+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T17:18:05.380999+0800 | INFO | __main__ | Configuration validated successfully
+2026-01-19T17:18:05.510984+0800 | DEBUG | omd_sharepoint_data.sharepoint_client | Microsoft Graph API URL: https://microsoftgraph.chinacloudapi.cn/v1.0/sites/omroncn.sharepoint.cn:/sites/mcm_OMD_00004
+2026-01-19T17:18:05.790804+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: Microsoft Entra ID error '(invalid_scope) AADSTS70011: The provided request must include a 'scope' input parameter. The provided value for the input parameter 'scope' is not valid. The scope https://microsoftgraph.chinacloudapi.cn/.default https://microsoftgraph.chinacloudapi.cn/Domain.Read.All is not valid. Trace ID: 0a367af8-ea3d-4d29-bd47-635986046000 Correlation ID: b875e6e3-6f90-4d4f-a3ac-5d2e655d94a8 Timestamp: 2026-01-19 09:18:05Z'
+Content: {"error":"invalid_scope","error_description":"AADSTS70011: The provided request must include a 'scope' input parameter. The provided value for the input parameter 'scope' is not valid. The scope https://microsoftgraph.chinacloudapi.cn/.default https://microsoftgraph.chinacloudapi.cn/Domain.Read.All is not valid. Trace ID: 0a367af8-ea3d-4d29-bd47-635986046000 Correlation ID: b875e6e3-6f90-4d4f-a3ac-5d2e655d94a8 Timestamp: 2026-01-19 09:18:05Z","error_codes":[70011],"timestamp":"2026-01-19 09:18:05Z","trace_id":"0a367af8-ea3d-4d29-bd47-635986046000","correlation_id":"b875e6e3-6f90-4d4f-a3ac-5d2e655d94a8"}
+2026-01-19T17:18:05.791239+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T17:18:05.791296+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T17:28:29.142536+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T17:28:29.932742+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint connection failed: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='3f35961e-1cc0-4ec7-9666-826f3c9d69dc', date=datetime.datetime(2026, 1, 19, 9, 28, 29), odata_type=None, request_id='1a305afe-4b05-4a2c-bead-908987c842c1'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T17:28:29.932863+0800 | ERROR | omd_sharepoint_data.sync_manager | Connection test failed: Failed to connect to SharePoint
+2026-01-19T17:28:29.932907+0800 | ERROR | __main__ | Application error: Failed to connect to SharePoint
+2026-01-19T17:37:19.287926+0800 | INFO | __main__ | Starting SharePoint sync application
+2026-01-19T17:37:21.058357+0800 | ERROR | omd_sharepoint_data.sharepoint_client | SharePoint 连接失败: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='dc42f0bc-95e2-4aba-9ab4-6ae01c1a28d0', date=datetime.datetime(2026, 1, 19, 9, 37, 21), odata_type=None, request_id='84d09190-3e83-4865-8fc6-36b3e9c4cf9c'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T17:37:21.058478+0800 | ERROR | omd_sharepoint_data.sync_manager | 连接测试失败: SharePoint 连接失败
+2026-01-19T17:37:21.058520+0800 | ERROR | __main__ | Application error: SharePoint 连接失败
+2026-01-19T17:39:09.140456+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T17:39:09.808174+0800 | ERROR | omd_sharepoint_data.sharepoint_client:67 | SharePoint 连接失败: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='2f524c59-ee20-45a5-b557-3752815df0aa', date=datetime.datetime(2026, 1, 19, 9, 39, 9), odata_type=None, request_id='ea13772b-8917-4aa8-9e0c-d20df0b89a48'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T17:39:09.808405+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T17:39:09.808450+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T17:47:24.261681+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T17:47:25.221699+0800 | ERROR | omd_sharepoint_data.sharepoint_client:67 | SharePoint 连接失败: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='508991bf-7227-42b8-906b-7b020970e449', date=datetime.datetime(2026, 1, 19, 9, 47, 25), odata_type=None, request_id='ca0afcc7-5e20-4566-8a51-4a2a2fc5fa8e'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T17:47:25.221953+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T17:47:25.222022+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T17:49:29.983441+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T17:49:31.843046+0800 | ERROR | omd_sharepoint_data.sharepoint_client:68 | SharePoint 连接失败: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='34b5c282-9db3-4fcb-9b2f-fd92576af401', date=datetime.datetime(2026, 1, 19, 9, 49, 31), odata_type=None, request_id='2b42a1a4-d935-49dc-a23f-25f3cc5a95da'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T17:49:31.843165+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T17:49:31.843206+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T17:53:54.342316+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T17:53:55.289357+0800 | ERROR | omd_sharepoint_data.sharepoint_client:72 | SharePoint 连接失败: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='f8c8880a-ad54-4476-be3d-3ac79b16e20d', date=datetime.datetime(2026, 1, 19, 9, 53, 55), odata_type=None, request_id='c5abbdbc-fa55-47b9-a98a-b084e95dfcf9'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T17:53:55.289965+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T17:53:55.290056+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T17:56:00.071904+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T17:56:00.715510+0800 | ERROR | omd_sharepoint_data.sharepoint_client:72 | SharePoint 连接失败: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='102e9f72-90dd-4345-9eae-d15e65472298', date=datetime.datetime(2026, 1, 19, 9, 56), odata_type=None, request_id='bdecd85c-117c-44fb-af0f-161abf3bca26'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T17:56:00.715638+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T17:56:00.715679+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T18:04:01.336265+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T18:04:02.394758+0800 | ERROR | omd_sharepoint_data.sharepoint_client:68 | SharePoint 连接失败: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='bc2806d4-d7ca-4f56-bbe5-853274fe7844', date=datetime.datetime(2026, 1, 19, 10, 4, 2), odata_type=None, request_id='cfdabdb7-1d6d-4ff0-b73d-196960e216af'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T18:04:02.394883+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T18:04:02.394924+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T18:09:09.730276+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T18:09:10.546209+0800 | ERROR | omd_sharepoint_data.sharepoint_client:77 | SharePoint 连接失败: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='64aa6efd-d722-4927-879a-de048aeef285', date=datetime.datetime(2026, 1, 19, 10, 9, 10), odata_type=None, request_id='631d854f-652a-4b3e-b484-16b546e27651'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T18:09:10.546348+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T18:09:10.546390+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T18:09:29.574856+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T18:09:30.394569+0800 | ERROR | omd_sharepoint_data.sharepoint_client:77 | SharePoint 连接失败: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='02c752b4-2917-4043-8f98-f8b20033e645', date=datetime.datetime(2026, 1, 19, 10, 9, 30), odata_type=None, request_id='85799a96-4a70-4b8d-a813-ced166ef8ba8'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T18:09:30.394828+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T18:09:30.394878+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T18:10:02.585334+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T18:10:03.633596+0800 | ERROR | omd_sharepoint_data.sharepoint_client:77 | SharePoint 连接失败: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='6fc365f6-f922-4920-81d3-a3211831fa1c', date=datetime.datetime(2026, 1, 19, 10, 10, 3), odata_type=None, request_id='ff3040af-e0a3-4845-b86b-4f2d5e624cbe'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-19T18:10:03.633728+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T18:10:03.633770+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T18:11:28.592117+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T18:11:28.990634+0800 | ERROR | omd_sharepoint_data.sharepoint_client:59 | 创建 Microsoft Graph 客户端失败: GraphServiceClient.__init__() got an unexpected keyword argument 'service_root_url'
+2026-01-19T18:11:28.990751+0800 | ERROR | omd_sharepoint_data.sharepoint_client:78 | SharePoint 连接失败: GraphServiceClient.__init__() got an unexpected keyword argument 'service_root_url'
+2026-01-19T18:11:28.990817+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T18:11:28.990885+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T18:14:31.149263+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T18:14:31.513002+0800 | ERROR | omd_sharepoint_data.sharepoint_client:78 | SharePoint 连接失败: 'GraphServiceClient' object has no attribute 'site'
+2026-01-19T18:14:31.514554+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T18:14:31.514682+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T18:15:31.590197+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T18:15:32.011185+0800 | ERROR | omd_sharepoint_data.sharepoint_client:79 | SharePoint 连接失败: 'GraphServiceClient' object has no attribute 'site'
+2026-01-19T18:15:32.012415+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T18:15:32.012494+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T18:42:05.713647+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T18:42:06.103180+0800 | ERROR | omd_sharepoint_data.sharepoint_client:58 | 创建 Microsoft Graph 客户端失败: GraphServiceClient.__init__() got an unexpected keyword argument 'service_root_url'
+2026-01-19T18:42:06.103307+0800 | ERROR | omd_sharepoint_data.sharepoint_client:79 | SharePoint 连接失败: GraphServiceClient.__init__() got an unexpected keyword argument 'service_root_url'
+2026-01-19T18:42:06.103354+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T18:42:06.103391+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-19T18:44:19.849946+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-19T18:44:20.325361+0800 | ERROR | omd_sharepoint_data.sharepoint_client:58 | 创建 Microsoft Graph 客户端失败: GraphServiceClient.__init__() got an unexpected keyword argument 'service_root_url'
+2026-01-19T18:44:20.325602+0800 | ERROR | omd_sharepoint_data.sharepoint_client:79 | SharePoint 连接失败: GraphServiceClient.__init__() got an unexpected keyword argument 'service_root_url'
+2026-01-19T18:44:20.325657+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-19T18:44:20.325711+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-20T09:41:50.906149+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T09:41:51.141361+0800 | ERROR | omd_sharepoint_data.sharepoint_client:58 | 创建 Microsoft Graph 客户端失败: GraphServiceClient.__init__() got an unexpected keyword argument 'service_root_url'
+2026-01-20T09:41:51.141475+0800 | ERROR | omd_sharepoint_data.sharepoint_client:79 | SharePoint 连接失败: GraphServiceClient.__init__() got an unexpected keyword argument 'service_root_url'
+2026-01-20T09:41:51.141538+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-20T09:41:51.141605+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-20T09:43:24.769887+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T09:43:25.063202+0800 | ERROR | omd_sharepoint_data.sharepoint_client:79 | SharePoint 连接失败: 'GraphServiceClient' object has no attribute 'site'
+2026-01-20T09:43:25.064524+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-20T09:43:25.064582+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-20T09:43:42.729788+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T09:43:43.096554+0800 | ERROR | omd_sharepoint_data.sharepoint_client:79 | SharePoint 连接失败: 'GraphServiceClient' object has no attribute 'site'
+2026-01-20T09:43:43.097761+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-20T09:43:43.097816+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-20T09:43:51.720641+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T09:43:52.664733+0800 | ERROR | omd_sharepoint_data.sharepoint_client:78 | SharePoint 连接失败: 
+        APIError
+        Code: 401
+        message: None
+        error: MainError(additional_data={}, code='InvalidAuthenticationToken', details=None, inner_error=InnerError(additional_data={}, client_request_id='6e75d63b-1ef4-4831-9632-8d44b8794c80', date=datetime.datetime(2026, 1, 20, 1, 43, 52), odata_type=None, request_id='6b7c6e7d-8ad8-462d-bd4b-86abc4dd18c0'), message='Access token validation failure. Invalid audience.', target=None)
+        
+2026-01-20T09:43:52.664843+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-20T09:43:52.665084+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-20T10:29:06.546460+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T10:29:06.593030+0800 | ERROR | omd_sharepoint_data.sharepoint_client:76 | SharePoint 连接失败: 'SharePointChinaClient' object has no attribute 'debug_token'
+2026-01-20T10:29:06.593173+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-20T10:29:06.593384+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-20T10:29:26.675509+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T10:29:26.718048+0800 | ERROR | omd_sharepoint_data.sharepoint_client:76 | SharePoint 连接失败: 'SharePointChinaClient' object has no attribute 'debug_token'
+2026-01-20T10:29:26.718165+0800 | ERROR | omd_sharepoint_data.sync_manager:36 | 连接测试失败: SharePoint 连接失败
+2026-01-20T10:29:26.718207+0800 | ERROR | __main__:99 | Application error: SharePoint 连接失败
+2026-01-20T10:29:40.404697+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T10:29:42.708303+0800 | INFO | omd_sharepoint_data.sync_manager:42 | 同步管理器初始化成功
+2026-01-20T10:29:42.708719+0800 | INFO | omd_sharepoint_data.scheduler:52 | 调度器已初始化，包含同步和清理任务
+2026-01-20T10:29:42.708789+0800 | INFO | __main__:67 | Testing configuration...
+2026-01-20T10:29:42.708843+0800 | INFO | __main__:69 | ✅ Configuration validated
+2026-01-20T10:29:42.709189+0800 | INFO | __main__:104 | SharePoint sync application stopped
+2026-01-20T10:34:59.729600+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T10:35:01.606238+0800 | INFO | omd_sharepoint_data.sync_manager:42 | 同步管理器初始化成功
+2026-01-20T10:35:01.609874+0800 | INFO | omd_sharepoint_data.scheduler:52 | 调度器已初始化，包含同步和清理任务
+2026-01-20T10:35:01.610265+0800 | INFO | __main__:67 | Testing configuration...
+2026-01-20T10:35:01.610392+0800 | INFO | __main__:69 | ✅ Configuration validated
+2026-01-20T10:35:01.611417+0800 | INFO | __main__:104 | SharePoint sync application stopped
+2026-01-20T10:39:33.234213+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T10:39:34.707952+0800 | INFO | omd_sharepoint_data.database:92 | 数据库表创建成功
+2026-01-20T10:39:34.708087+0800 | INFO | omd_sharepoint_data.sync_manager:42 | 同步管理器初始化成功
+2026-01-20T10:39:34.708242+0800 | INFO | omd_sharepoint_data.scheduler:52 | 调度器已初始化，包含同步和清理任务
+2026-01-20T10:39:34.708282+0800 | INFO | __main__:67 | Testing configuration...
+2026-01-20T10:39:34.708311+0800 | INFO | __main__:69 | ✅ Configuration validated
+2026-01-20T10:39:34.708555+0800 | INFO | __main__:104 | SharePoint sync application stopped
+2026-01-20T10:39:54.211604+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T10:39:55.579677+0800 | INFO | omd_sharepoint_data.database:92 | 数据库表创建成功
+2026-01-20T10:39:55.580730+0800 | INFO | omd_sharepoint_data.sync_manager:42 | 同步管理器初始化成功
+2026-01-20T10:39:55.580942+0800 | INFO | omd_sharepoint_data.scheduler:52 | 调度器已初始化，包含同步和清理任务
+2026-01-20T10:39:55.580988+0800 | INFO | __main__:67 | Testing configuration...
+2026-01-20T10:39:55.581019+0800 | INFO | __main__:69 | ✅ Configuration validated
+2026-01-20T10:39:55.581303+0800 | INFO | __main__:104 | SharePoint sync application stopped
+2026-01-20T10:41:06.645090+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T10:41:08.013496+0800 | INFO | omd_sharepoint_data.database:92 | 数据库表创建成功
+2026-01-20T10:41:08.013641+0800 | INFO | omd_sharepoint_data.sync_manager:42 | 同步管理器初始化成功
+2026-01-20T10:41:08.013796+0800 | INFO | omd_sharepoint_data.scheduler:52 | 调度器已初始化，包含同步和清理任务
+2026-01-20T10:41:08.013834+0800 | INFO | __main__:49 | Running manual sync...
+2026-01-20T10:41:08.013862+0800 | INFO | omd_sharepoint_data.scheduler:98 | 运行手动同步操作
+2026-01-20T10:41:08.063267+0800 | ERROR | omd_sharepoint_data.sharepoint_client:107 | 获取文件夹失败: 
+        APIError
+        Code: 400
+        message: None
+        error: MainError(additional_data={}, code='BadRequest', details=None, inner_error=InnerError(additional_data={}, client_request_id='00054af3-3856-4d7a-8b7e-bc00466dbf99', date=datetime.datetime(2026, 1, 20, 2, 41, 8), odata_type=None, request_id='8a63590d-9e57-4fbf-abaa-71ef4190f6a2'), message="Resource not found for the segment 'mcm_OMD_00004'.", target=None)
+        
+2026-01-20T10:41:08.063379+0800 | INFO | omd_sharepoint_data.sync_manager:59 | 开始同步 0 个文件夹
+2026-01-20T10:41:08.063416+0800 | INFO | omd_sharepoint_data.scheduler:100 | 手动同步完成: {'folders_processed': 0, 'files_synced': 0, 'files_skipped': 0, 'files_failed': 0}
+2026-01-20T10:41:08.063447+0800 | INFO | __main__:52 | Sync completed: {'folders_processed': 0, 'files_synced': 0, 'files_skipped': 0, 'files_failed': 0}
+2026-01-20T10:41:08.063633+0800 | INFO | __main__:104 | SharePoint sync application stopped
+2026-01-20T10:43:48.538487+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T10:43:50.060569+0800 | INFO | omd_sharepoint_data.database:92 | 数据库表创建成功
+2026-01-20T10:43:50.060867+0800 | INFO | omd_sharepoint_data.sync_manager:42 | 同步管理器初始化成功
+2026-01-20T10:43:50.061579+0800 | INFO | omd_sharepoint_data.scheduler:52 | 调度器已初始化，包含同步和清理任务
+2026-01-20T10:43:50.061887+0800 | INFO | __main__:67 | Testing configuration...
+2026-01-20T10:43:50.062012+0800 | INFO | __main__:69 | ✅ Configuration validated
+2026-01-20T10:43:50.062562+0800 | INFO | __main__:104 | SharePoint sync application stopped
+2026-01-20T10:45:16.624408+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T10:45:18.030725+0800 | INFO | omd_sharepoint_data.database:92 | 数据库表创建成功
+2026-01-20T10:45:18.030882+0800 | INFO | omd_sharepoint_data.sync_manager:42 | 同步管理器初始化成功
+2026-01-20T10:45:18.031068+0800 | INFO | omd_sharepoint_data.scheduler:52 | 调度器已初始化，包含同步和清理任务
+2026-01-20T10:45:18.031115+0800 | INFO | __main__:49 | Running manual sync...
+2026-01-20T10:45:18.031177+0800 | INFO | omd_sharepoint_data.scheduler:98 | 运行手动同步操作
+2026-01-20T10:45:18.153646+0800 | ERROR | omd_sharepoint_data.sharepoint_client:108 | 获取文件夹失败: 
+        APIError
+        Code: 404
+        message: None
+        error: MainError(additional_data={}, code='itemNotFound', details=None, inner_error=InnerError(additional_data={}, client_request_id='ee242137-b3dc-47e2-a959-320dfc16c304', date=datetime.datetime(2026, 1, 20, 2, 45, 18), odata_type=None, request_id='63033e82-1e1b-4c74-8ef5-8abc7b09424e'), message='The provided path does not exist, or does not represent a site', target=None)
+        
+2026-01-20T10:45:18.153805+0800 | INFO | omd_sharepoint_data.sync_manager:59 | 开始同步 0 个文件夹
+2026-01-20T10:45:18.153844+0800 | INFO | omd_sharepoint_data.scheduler:100 | 手动同步完成: {'folders_processed': 0, 'files_synced': 0, 'files_skipped': 0, 'files_failed': 0}
+2026-01-20T10:45:18.153874+0800 | INFO | __main__:52 | Sync completed: {'folders_processed': 0, 'files_synced': 0, 'files_skipped': 0, 'files_failed': 0}
+2026-01-20T10:45:18.154101+0800 | INFO | __main__:104 | SharePoint sync application stopped
+2026-01-20T10:53:40.077990+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T10:53:41.472443+0800 | INFO | omd_sharepoint_data.database:92 | 数据库表创建成功
+2026-01-20T10:53:41.472604+0800 | INFO | omd_sharepoint_data.sync_manager:55 | 同步管理器初始化成功
+2026-01-20T10:53:41.472764+0800 | INFO | omd_sharepoint_data.scheduler:52 | 调度器已初始化，包含同步和清理任务
+2026-01-20T10:53:41.472804+0800 | INFO | __main__:67 | Testing configuration...
+2026-01-20T10:53:41.472834+0800 | INFO | __main__:69 | ✅ Configuration validated
+2026-01-20T10:53:41.473099+0800 | INFO | __main__:104 | SharePoint sync application stopped
+2026-01-20T12:39:31.704144+0800 | INFO | __main__:30 | Starting SharePoint sync application
+2026-01-20T12:39:33.143387+0800 | INFO | omd_sharepoint_data.database:92 | 数据库表创建成功
+2026-01-20T12:39:33.143534+0800 | INFO | omd_sharepoint_data.sync_manager:55 | 同步管理器初始化成功
+2026-01-20T12:39:33.143698+0800 | INFO | omd_sharepoint_data.scheduler:52 | 调度器已初始化，包含同步和清理任务
+2026-01-20T12:39:33.143737+0800 | INFO | __main__:67 | Testing configuration...
+2026-01-20T12:39:33.143765+0800 | INFO | __main__:69 | ✅ Configuration validated
+2026-01-20T12:39:33.144007+0800 | INFO | __main__:104 | SharePoint sync application stopped

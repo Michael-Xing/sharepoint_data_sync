@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sharepoint-sync
+  namespace: default
+  labels:
+    app: sharepoint-sync
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sharepoint-sync
+  template:
+    metadata:
+      labels:
+        app: sharepoint-sync
+    spec:
+      containers:
+      - name: sharepoint-sync
+        image: your-registry/sharepoint-sync:latest  # Replace with your image
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: health
+        env:
+        - name: SHAREPOINT_SITE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: sharepoint-sync-config
+              key: SHAREPOINT_SITE_URL
+        - name: SHAREPOINT_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: sharepoint-sync-secret
+              key: SHAREPOINT_CLIENT_ID
+        - name: SHAREPOINT_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: sharepoint-sync-secret
+              key: SHAREPOINT_CLIENT_SECRET
+        - name: SHAREPOINT_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: sharepoint-sync-secret
+              key: SHAREPOINT_TENANT_ID
+        - name: SHAREPOINT_DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: sharepoint-sync-secret
+              key: SHAREPOINT_DATABASE_URL
+        - name: SHAREPOINT_AUTHORITY_URL
+          valueFrom:
+            configMapKeyRef:
+              name: sharepoint-sync-config
+              key: SHAREPOINT_AUTHORITY_URL
+        - name: SHAREPOINT_SYNC_FOLDERS_PATTERN
+          valueFrom:
+            configMapKeyRef:
+              name: sharepoint-sync-config
+              key: SHAREPOINT_SYNC_FOLDERS_PATTERN
+        - name: SHAREPOINT_RETENTION_DAYS
+          valueFrom:
+            configMapKeyRef:
+              name: sharepoint-sync-config
+              key: SHAREPOINT_RETENTION_DAYS
+        - name: SHAREPOINT_BATCH_SIZE
+          valueFrom:
+            configMapKeyRef:
+              name: sharepoint-sync-config
+              key: SHAREPOINT_BATCH_SIZE
+        - name: SHAREPOINT_MAX_CONCURRENT_DOWNLOADS
+          valueFrom:
+            configMapKeyRef:
+              name: sharepoint-sync-config
+              key: SHAREPOINT_MAX_CONCURRENT_DOWNLOADS
+        - name: SHAREPOINT_SYNC_INTERVAL_MINUTES
+          valueFrom:
+            configMapKeyRef:
+              name: sharepoint-sync-config
+              key: SHAREPOINT_SYNC_INTERVAL_MINUTES
+        - name: SHAREPOINT_CLEANUP_INTERVAL_HOURS
+          valueFrom:
+            configMapKeyRef:
+              name: sharepoint-sync-config
+              key: SHAREPOINT_CLEANUP_INTERVAL_HOURS
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: sharepoint-sync-config
+              key: LOG_LEVEL
+        - name: LOG_FORMAT
+          valueFrom:
+            configMapKeyRef:
+              name: sharepoint-sync-config
+              key: LOG_FORMAT
+        volumeMounts:
+        - name: data-volume
+          mountPath: /app/data
+        - name: logs-volume
+          mountPath: /app/logs
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: sharepoint-sync-data
+      - name: logs-volume
+        emptyDir: {}
+
+
