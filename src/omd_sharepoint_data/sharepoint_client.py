@@ -1,6 +1,7 @@
 """使用 Microsoft Graph SDK 的中国地区 SharePoint 客户端。"""
 
 import asyncio, aiohttp
+from os import name
 from pydoc import cli
 import hashlib
 from pathlib import Path
@@ -8,20 +9,16 @@ from typing import Dict, List, Optional, Tuple
 from urllib.parse import urlparse, quote
 
 import httpx
-import jwt
 from azure.identity.aio import ClientSecretCredential
 from kiota_authentication_azure.azure_identity_authentication_provider import AzureIdentityAuthenticationProvider
 from loguru import logger
 from msgraph import GraphServiceClient
-
-
-
+from msgraph.graph_request_adapter import GraphRequestAdapter
+from msgraph_core import GraphClientFactory, NationalClouds
 
 from omd_sharepoint_data.config import sharepoint_config
-from omd_sharepoint_data.database import SyncFile, SyncFolder, SyncLog, db_manager
+from omd_sharepoint_data.database import SyncFile, SyncLog, db_manager
 # 相对导入,重些GraphRequestAdapter，中国区
-from omd_sharepoint_data.graph_request_ada import GraphRequestAdapter
-
 
 
 class SharePointChinaClient:
@@ -47,6 +44,13 @@ class SharePointChinaClient:
         self.graph_client = self._create_graph_client()
         self.http_client = httpx.AsyncClient(timeout=60.0)
 
+        # 缓存站点和驱动器信息
+        self._cached_site = None
+        self._cached_drive = None
+
+        # 服务器相对路径前缀
+        self.server_path_prefix = f"/{self.site_path}/Shared Documents"
+
     def _create_credential(self):
         """创建 Azure 凭据。"""
         return ClientSecretCredential(
@@ -60,10 +64,11 @@ class SharePointChinaClient:
         """创建 Microsoft Graph 客户端。"""
         try:
             scopes = ['https://microsoftgraph.chinacloudapi.cn/.default']
-            # 使用自定义的GraphRequestAdapter，中国区
+            # 中国区
             auth_provider = AzureIdentityAuthenticationProvider(self.credential, scopes=scopes)
-            request_adapter = GraphRequestAdapter(auth_provider)
-            return GraphServiceClient(credentials=self.credential, scopes=scopes,request_adapter=request_adapter)
+            http_client = GraphClientFactory.create_with_default_middleware(host=NationalClouds.China)
+            request_adapter = GraphRequestAdapter(auth_provider, http_client)
+            return GraphServiceClient(request_adapter=request_adapter)
         except Exception as e:
             logger.error(f"创建 Microsoft Graph 客户端失败: {e}")
             return None
@@ -72,41 +77,109 @@ class SharePointChinaClient:
     async def test_connection(self) -> bool:
         """测试 SharePoint 站点连接。"""
         try:
-            site = await self._create_graph_client().sites.by_site_id(self._site_identifier).get()
+            site, _ = await self._get_site_and_drive()
             return site.display_name is not None
         except Exception as e:
             logger.error(f"SharePoint 连接失败: {e}")
             return False
 
-    async def get_folders_by_pattern(self, pattern: str) -> List[Dict]:
-        """获取匹配指定模式的所有文件夹。"""
+    async def _get_site_and_drive(self):
+        """获取站点和驱动器信息（带缓存优化）。
+
+        Returns:
+            tuple: (site, drive) 或在出错时抛出异常
+        """
+        # 使用缓存避免重复请求
+        if self._cached_site and self._cached_drive:
+            return self._cached_site, self._cached_drive
+
+        # 步骤1：获取站点信息
+        site = await self.graph_client.sites.by_site_id(self._site_identifier).get()
+        if not site:
+            raise Exception("无法获取站点信息")
+
+        # 步骤2：根据站点ID，获取驱动信息
+        drive = await self.graph_client.sites.by_site_id(site.id).drive.get()
+        if not drive:
+            raise Exception("无法获取驱动器信息")
+
+        # 缓存结果
+        self._cached_site = site
+        self._cached_drive = drive
+
+        return site, drive
+
+
+    async def get_folders_pdf_by_pattern(self, pattern: str) -> List[Dict]:
+        """获取项目文件中的所有PDF文件。
+
+        主要功能：
+        1. 根据驱动和根目录文件夹，找到根目录下的"项目文件"
+        2. 在"项目文件"下找到所有以"开发-*"开头的文件夹
+        3. 递归查找这些文件夹下的所有.pdf文件
+        4. 返回PDF文件对象列表，server_relative_url从"项目文件"开始
+
+        Returns:
+            PDF文件对象列表，每个对象包含：
+            - id: 文件ID
+            - name: 文件名
+            - server_relative_url: 从"项目文件"开始的相对路径
+            - web_url: 文件的web访问地址
+            - download_url: 文件的下载地址,非认证只有几分钟
+            - size: 文件大小
+            - time_last_modified: 最后修改时间
+        """
         try:
             if self.graph_client is None:
                 return []
-            print(self._site_identifier)
-            drives = await self.graph_client.sites.by_site_id(self._site_identifier).drive.get()
 
-            if not drives:
-                return []
+            # 获取站点和驱动器信息
+            site, drive = await self._get_site_and_drive()
 
-            items = await self.graph_client.drives.by_drive_id(drives.id).root.children.get()
-            folders = []
+            # 步骤1：获取文档库根目录内容
+            root_item = await self.graph_client.drives.by_drive_id(drive.id).root.get()
+            root_children = await self.graph_client.drives.by_drive_id(drive.id).items.by_drive_item_id(root_item.id).children.get()
 
-            if items and items.value:
-                for item in items.value:
-                    if item.folder and self._matches_pattern(item.name, pattern):
-                        folders.append({
-                            "id": item.id,
-                            "name": item.name,
-                            "server_relative_url": f"/sites/{self.site_path}/Shared Documents/{item.name}",
-                            "time_last_modified": item.last_modified_date_time,
-                            "web_url": item.web_url
-                        })
+            pdf_files = []
 
-            return folders
+            # 步骤2：查找基础文件夹
+            if root_children and root_children.value:
+                base_folder = None
+                for item in root_children.value:
+                    if item.folder and item.name == sharepoint_config.base_folder_name:
+                        base_folder = item
+                        break
+
+                if base_folder:
+                    logger.info(f"找到基础文件夹: {base_folder.name}")
+
+                    # 步骤3：获取基础文件夹下的内容
+                    base_children = await self.graph_client.drives.by_drive_id(drive.id).items.by_drive_item_id(base_folder.id).children.get()
+
+                    # 步骤4：过滤出匹配开发文件夹模式的文件
+                    dev_folders = []
+                    if base_children and base_children.value:
+                        for item in base_children.value:
+                            if item.folder and self._matches_pattern(item.name, sharepoint_config.sync_folders_pattern):
+                                dev_folders.append(item)
+
+                    logger.info(f"找到 {len(dev_folders)} 个匹配的开发文件夹")
+
+                    # 步骤5：递归查找每个开发文件夹下的PDF文件
+                    for dev_folder in dev_folders:
+                        logger.debug(f"正在处理开发文件夹: {dev_folder.name}")
+                        await self._collect_pdf_files_recursive_with_base(
+                            drive.id, dev_folder, f"{dev_folder.name}", pdf_files
+                        )
+
+                    logger.info(f"总共找到 {len(pdf_files)} 个PDF文件")
+                else:
+                    logger.warning("未找到'项目文件'文件夹")
+
+            return pdf_files
 
         except Exception as e:
-            logger.error(f"获取文件夹失败: {e}")
+            logger.error(f"获取开发PDF文件失败: {e}")
             return []
 
 
@@ -115,120 +188,72 @@ class SharePointChinaClient:
         import fnmatch
         return fnmatch.fnmatch(folder_name, pattern)
 
-    async def get_folder_files(self, folder_path: str) -> List[Dict]:
-        """递归获取特定文件夹中的所有文件。"""
-        try:
-            if self.graph_client is None:
-                return []
-
-            drives = await self.graph_client.sites.by_site_id(self._site_identifier).drive.get()
-
-            if not drives:
-                return []
-
-            # 构建相对于驱动器根目录的项目路径
-            relative_path_start = f"/sites/{self.site_path}/Shared Documents/"
-            if not folder_path.startswith(relative_path_start):
-                return []
-
-            item_path_in_drive = folder_path[len(relative_path_start):].strip('/')
-
-            if item_path_in_drive:
-                items = await self.graph_client.drives.by_drive_id(drives.id).root.item_with_path(item_path_in_drive).children.get()
-            else:
-                items = await self.graph_client.drives.by_drive_id(drives.id).root.children.get()
-
-            files = []
-            if items and items.value:
-                for item in items.value:
-                    if item.file:
-                        files.append({
-                            "id": item.id,
-                            "name": item.name,
-                            "server_relative_url": f"{folder_path}/{item.name}",
-                            "time_last_modified": item.last_modified_date_time,
-                            "length": item.size,
-                            "etag": item.e_tag
-                        })
-                    elif item.folder:
-                        subfolder_files = await self.get_folder_files(f"{folder_path}/{item.name}")
-                        files.extend(subfolder_files)
-
-            return files
-
-        except Exception as e:
-            logger.error(f"从文件夹 {folder_path} 获取文件失败: {e}")
-            return []
-
-    async def download_file(self, file_url: str, local_path: Path, resume_from: int = 0) -> Tuple[bool, Optional[str]]:
+    async def download_file(self, file_info: dict, local_path: Path) -> Tuple[bool, Optional[str]]:
         """从 SharePoint 下载文件。"""
         try:
             local_path.parent.mkdir(parents=True, exist_ok=True)
-
-            success, checksum = await self._download_via_api(file_url, local_path)
+            success, checksum = await self._download_file_by_id(file_info["id"], local_path)
             return success, checksum
 
         except Exception as e:
-            logger.error(f"下载文件 {file_url} 失败: {e}")
+            logger.error(f"下载文件 {local_path} 失败: {e}")
             return False, str(e)
 
-    async def get_file_info(self, file_url: str) -> Optional[Dict]:
-        """获取详细的文件信息。"""
+
+    async def _collect_pdf_files_recursive_with_base(self, drive_id: str, base_folder_item, current_path: str, pdf_files: List[Dict]):
+        """从开发文件夹开始递归收集PDF文件，路径从'项目文件'开始构建。"""
         try:
-            if self.graph_client is None:
-                return None
+            # 获取当前文件夹的内容
+            folder_children = await self.graph_client.drives.by_drive_id(drive_id).items.by_drive_item_id(base_folder_item.id).children.get()
 
-            drives = await self.graph_client.sites.by_site_id(self._site_identifier).drive.get()
+            if folder_children and folder_children.value:
+                for item in folder_children.value:
+                    if item.file and item.name.lower().endswith('.pdf'):
+                        try:
+                            # 构建从配置的基础文件夹开始的服务器相对路径
+                            server_relative_url = f"{sharepoint_config.base_folder_name}/{current_path}/{item.name}"
 
-            if not drives:
-                return None
+                            # 获取etag (Microsoft Graph SDK使用e_tag属性)
+                            etag_value = getattr(item, 'e_tag', None)
 
-            relative_path_start = f"/sites/{self.site_path}/Shared Documents/"
-            if not file_url.startswith(relative_path_start):
-                return None
-
-            item_path_in_drive = file_url[len(relative_path_start):].strip('/')
-            item = await self.graph_client.drives.by_drive_id(drives.id).root.item_with_path(item_path_in_drive).get()
-
-            if item and item.file:
-                return {
-                    "id": item.id,
-                    "name": item.name,
-                    "server_relative_url": file_url,
-                    "time_last_modified": item.last_modified_date_time,
-                    "length": item.size,
-                    "etag": item.e_tag
-                }
-
-            return None
-
+                            pdf_file_info = {
+                                "id": item.id,
+                                "name": item.name,
+                                "server_relative_url": server_relative_url,
+                                "web_url": item.web_url,
+                                "download_url": getattr(item.additional_data, 'get', lambda k, d='': d)('@microsoft.graph.downloadUrl', ''),
+                                "size": item.size,
+                                "etag": etag_value,
+                                "time_last_modified": item.last_modified_date_time.isoformat() if hasattr(item.last_modified_date_time, 'isoformat') else str(item.last_modified_date_time)
+                            }
+                            pdf_files.append(pdf_file_info)
+                            logger.debug(f"找到PDF文件: {server_relative_url}")
+                        except Exception as e:
+                            logger.warning(f"处理PDF文件 {item.name} 时出错: {e}")
+                    elif item.folder:
+                        # 递归处理子文件夹
+                        try:
+                            subfolder_path = f"{current_path}/{item.name}"
+                            await self._collect_pdf_files_recursive_with_base(drive_id, item, subfolder_path, pdf_files)
+                        except Exception as e:
+                            logger.warning(f"无法访问子文件夹 {item.name}: {e}")
         except Exception as e:
-            logger.error(f"获取文件 {file_url} 信息失败: {e}")
-            return None
+            logger.warning(f"处理文件夹 {base_folder_item.name} 时出错: {e}")
 
-    async def _download_via_api(self, file_url: str, local_path: Path) -> Tuple[bool, Optional[str]]:
-        """使用 Microsoft Graph API 下载文件。"""
+
+    async def _download_file_by_id(self, file_id: str, local_path: Path) -> Tuple[bool, Optional[str]]:
+        """使用 Microsoft Graph SDK 下载文件。"""
         try:
-            drives = await self.graph_client.sites.by_site_id(self._site_identifier).drive.get()
-
-            if not drives:
-                return False, "未找到驱动器"
-
-            relative_path_start = f"/sites/{self.site_path}/Shared Documents/"
-            if not file_url.startswith(relative_path_start):
-                return False, "无效的文件 URL 格式"
-
-            item_path_in_drive = file_url[len(relative_path_start):].strip('/')
-            content = await self.graph_client.drives.by_drive_id(drives.id).root.item_with_path(item_path_in_drive).content.get()
-
+            # 获取站点和驱动器信息
+            _, drive = await self._get_site_and_drive()
+            res = await self.graph_client.drives.by_drive_id(drive.id).items.by_drive_item_id(file_id).content.get()
             with open(local_path, 'wb') as f:
-                f.write(content)
-
-            checksum = hashlib.sha256(content).hexdigest()
+                f.write(res)
+            checksum = hashlib.sha256(res).hexdigest()
             return True, checksum
 
         except Exception as e:
-            logger.error(f"下载文件 {file_url} 失败: {e}")
+            logger.error(f"下载文件 {file_id} 失败: {e}")
             return False, str(e)
 
     async def close(self):
@@ -236,8 +261,12 @@ class SharePointChinaClient:
         if self.http_client:
             await self.http_client.aclose()
 
+async def main():
+    client = SharePointChinaClient()
+    folders = await client.get_folders_by_pattern(sharepoint_config.sync_folders_pattern)
+    for file_info in folders:
+        success, checksum_or_error = await client.download_file(file_info)
 
 if __name__ == "__main__":
-    client = SharePointChinaClient()
-    result = asyncio.run(client.get_folders_by_pattern())
+    result = asyncio.run(main())
     print(result)  

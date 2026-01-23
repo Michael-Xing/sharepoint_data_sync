@@ -17,7 +17,10 @@ class SharePointConfig(BaseSettings):
     tenant_id: str = Field(default="test-tenant-id")
     authority_url: str = Field(default="https://login.chinacloudapi.cn")
 
-    sync_folders_pattern: str = Field(default="开发-*")
+    # 文件夹和模式配置
+    base_folder_name: str = Field(default="开发项目文件")
+    sync_folders_pattern: str = Field(default="开发-*")  # 保留向后兼容性
+
     local_sync_path: Path = Field(default=Path("./data"))
     database_url: str = Field(default="postgresql://user:password@localhost:5432/sharepoint_sync")
 
