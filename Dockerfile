@@ -4,7 +4,8 @@ FROM m.daocloud.io/docker.io/library/python:3.12-slim
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
-ENV UV_CACHE_DIR=/tmp/uv-cache
+# Use an application-owned directory for uv cache to avoid permission issues
+ENV UV_CACHE_DIR=/app/.uv-cache
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -30,13 +31,11 @@ COPY README.md ./
 # Install Python dependencies
 RUN uv sync --frozen --no-install-project --no-dev
 
-# Create non-root user
+# Create non-root user and prepare directories
 RUN useradd --create-home --shell /bin/bash app \
+    && mkdir -p /app/data /app/logs /app/.uv-cache \
     && chown -R app:app /app
 USER app
-
-# Create data directory
-RUN mkdir -p /app/data /app/logs
 
 # Expose port (if needed for health checks)
 EXPOSE 8080

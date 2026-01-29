@@ -1,12 +1,27 @@
-.PHONY: help install sync lock test run sync-cmd cleanup-cmd build docker-run docker-stop clean deploy k8s-apply k8s-delete k8s-status format lint check
+.PHONY: help install sync lock test run sync-cmd cleanup-cmd build buildx-setup buildx-build buildx-build-local buildx-push buildx-inspect docker-run docker-stop clean deploy k8s-apply k8s-delete k8s-status format lint check
 
 # 项目配置
 PROJECT_NAME := omd-sharepoint-data
-IMAGE_NAME := sharepoint-sync
-IMAGE_TAG := latest
-DOCKER_REGISTRY := m.daocloud.io
+RELEASE_VERSION = v1.0.0
+APP = omd-sharepoint-data
+SERVER_BIN = ${APP}
+GIT_COUNT = $(shell git rev-list --all --count 2>/dev/null || echo "0")
+GIT_HASH = $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")
+RELEASE_TAG = $(RELEASE_VERSION).$(GIT_COUNT).$(GIT_HASH)
+
+# Docker 构建配置
+DOCKER_REGISTRY ?= release.daocloud.io/aigc
+IMAGE_NAME ?= sharepoint-sync
+IMAGE_TAG ?= $(RELEASE_TAG)
+
 PYTHON := python3
 UV := uv
+
+# Buildx 配置
+BUILDER_NAME := multiarch-builder
+# 默认支持的平台：amd64 和 arm64
+PLATFORMS ?= linux/amd64,linux/arm64
+# 可以单独指定平台，例如: make buildx-build PLATFORMS=linux/amd64
 
 # 颜色定义
 GREEN := \033[0;32m
@@ -75,10 +90,72 @@ check: format lint test ## 运行所有检查（格式化、检查、测试）
 
 ##@ Docker
 
-build: ## 构建 Docker 镜像
+build: ## 构建 Docker 镜像（单平台，当前架构）
 	@echo "$(GREEN)🐳 构建 Docker 镜像...$(NC)"
+	@echo "$(YELLOW)版本标签: $(IMAGE_TAG)$(NC)"
 	@docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
 	@echo "$(GREEN)✅ 镜像构建完成: $(IMAGE_NAME):$(IMAGE_TAG)$(NC)"
+
+buildx-setup: ## 设置 Docker Buildx（创建多平台构建器）
+	@echo "$(GREEN)🔧 设置 Docker Buildx...$(NC)"
+	@if ! docker buildx ls | grep -q $(BUILDER_NAME); then \
+		echo "$(GREEN)创建 buildx builder: $(BUILDER_NAME)$(NC)"; \
+		docker buildx create --name $(BUILDER_NAME) --driver docker-container --use || \
+		docker buildx use $(BUILDER_NAME); \
+	else \
+		echo "$(GREEN)使用现有 buildx builder: $(BUILDER_NAME)$(NC)"; \
+		docker buildx use $(BUILDER_NAME); \
+	fi
+	@docker buildx inspect --bootstrap
+	@echo "$(GREEN)✅ Buildx 设置完成$(NC)"
+
+buildx-build: buildx-setup ## 使用 Buildx 构建多平台镜像（构建到缓存，不加载到本地）
+	@echo "$(GREEN)🐳 使用 Buildx 构建多平台镜像...$(NC)"
+	@echo "$(YELLOW)平台: $(PLATFORMS)$(NC)"
+	@echo "$(YELLOW)版本标签: $(IMAGE_TAG)$(NC)"
+	@echo "$(YELLOW)注意: 多平台镜像不会加载到本地，使用 make buildx-push 推送到仓库$(NC)"
+	@docker buildx build \
+		--platform $(PLATFORMS) \
+		--tag $(IMAGE_NAME):$(IMAGE_TAG) \
+		--tag $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG) \
+		.
+	@echo "$(GREEN)✅ 多平台镜像构建完成（在 buildx 缓存中）$(NC)"
+	@echo "$(YELLOW)使用 make buildx-push 推送到仓库，或使用 make buildx-build-local 构建单个平台到本地$(NC)"
+
+buildx-build-local: buildx-setup ## 使用 Buildx 构建单个平台镜像并加载到本地（PLATFORM 环境变量，默认 linux/amd64）
+	@echo "$(GREEN)🐳 使用 Buildx 构建单平台镜像到本地...$(NC)"
+	@PLATFORM=$${PLATFORM:-linux/amd64}; \
+	echo "$(YELLOW)平台: $$PLATFORM$(NC)"; \
+	echo "$(YELLOW)版本标签: $(IMAGE_TAG)$(NC)"; \
+	docker buildx build \
+		--platform $$PLATFORM \
+		--tag $(IMAGE_NAME):$(IMAGE_TAG) \
+		--load \
+		.
+	@echo "$(GREEN)✅ 镜像已构建并加载到本地: $(IMAGE_NAME):$(IMAGE_TAG)$(NC)"
+
+buildx-push: buildx-setup ## 使用 Buildx 构建并推送多平台镜像到仓库
+	@echo "$(GREEN)🐳 使用 Buildx 构建并推送多平台镜像...$(NC)"
+	@echo "$(YELLOW)平台: $(PLATFORMS)$(NC)"
+	@echo "$(YELLOW)版本标签: $(IMAGE_TAG)$(NC)"
+	@echo "$(YELLOW)目标仓库: $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)$(NC)"
+	@docker buildx build \
+		--platform $(PLATFORMS) \
+		--tag $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG) \
+		--push \
+		.
+	@echo "$(GREEN)✅ 多平台镜像已构建并推送到: $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(IMAGE_TAG)$(NC)"
+
+buildx-inspect: ## 检查 Buildx builder 状态
+	@echo "$(GREEN)🔍 检查 Buildx builder 状态...$(NC)"
+	@docker buildx ls
+	@echo ""
+	@if docker buildx ls | grep -q $(BUILDER_NAME); then \
+		echo "$(GREEN)检查 builder: $(BUILDER_NAME)$(NC)"; \
+		docker buildx inspect $(BUILDER_NAME); \
+	else \
+		echo "$(YELLOW)⚠️  Builder $(BUILDER_NAME) 不存在，运行 make buildx-setup 创建$(NC)"; \
+	fi
 
 docker-run: ## 运行 Docker 容器
 	@echo "$(GREEN)🐳 启动 Docker 容器...$(NC)"
@@ -86,6 +163,7 @@ docker-run: ## 运行 Docker 容器
 		echo "$(RED)❌ .env 文件不存在，请先创建$(NC)"; \
 		exit 1; \
 	fi
+	@echo "$(YELLOW)使用镜像: $(IMAGE_NAME):$(IMAGE_TAG)$(NC)"
 	@docker run -d \
 		--name $(PROJECT_NAME) \
 		--env-file .env \
