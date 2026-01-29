@@ -1,5 +1,5 @@
 # Use Python 3.12 slim image
-FROM python:3.12-slim
+FROM m.daocloud.io/docker.io/library/python:3.12-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
@@ -22,6 +22,7 @@ WORKDIR /app
 
 # Copy project files
 COPY pyproject.toml ./
+COPY uv.lock ./
 COPY src/ ./src/
 COPY main.py ./
 COPY README.md ./
