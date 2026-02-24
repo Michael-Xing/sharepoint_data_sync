@@ -162,7 +162,7 @@ class SyncManager:
             logger.error(f"处理PDF文件 {pdf_file['name']} 时出错: {e}")
 
             # 记录失败日志
-            await self._log_sync_failure(pdf_file, str(e))
+            await self._log_sync_failure(pdf_file, str(e), session)
 
     async def _log_sync_success(self, pdf_file: Dict, local_path: str, checksum: str, session):
         """记录成功的同步操作。"""
