@@ -121,11 +121,14 @@ class SyncManager:
             file_id = pdf_file["id"]
             existing_file = existing_files_dict.get(file_id)
 
-            # 构建本地路径
+            # 构建本地路径：
+            # 现在支持多个基础目录，因此在本地同步目录下需要保留基础目录名称，
+            # 再按照目录树向下保留文件路径。
             server_relative_url = pdf_file["server_relative_url"]
-            base_folder_prefix = f"{sharepoint_config.base_folder_name}/"
-            relative_path = server_relative_url.replace(base_folder_prefix, "")
-            local_path = self.local_sync_path / relative_path
+            # server_relative_url 形如: "<基础目录>/<开发目录>/.../<文件名>"
+            # 直接将其拼接到本地同步根目录下，形成:
+            #   ./data/<基础目录>/<开发目录>/.../<文件名>
+            local_path = self.local_sync_path / server_relative_url
 
             # 确保目录存在
             local_path.parent.mkdir(parents=True, exist_ok=True)
