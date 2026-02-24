@@ -344,8 +344,8 @@ class SharePointChinaClient:
                 for item in folder_children.value:
                     if item.file and item.name.lower().endswith('.pdf'):
                         # 应用目录过滤规则：不在目标子目录下的 PDF 不同步
-                        if not _is_under_target_folder():
-                            continue
+                        # if not _is_under_target_folder():
+                        #     continue
                         try:
                             # 构建从配置的基础文件夹开始的服务器相对路径，完全保留 SharePoint 中的目录层级
                             # 例如: "<基础目录>/开发-XXX/DR1/AI输入文件夹/子目录/文件.pdf"
