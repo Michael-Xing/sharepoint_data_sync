@@ -2,17 +2,21 @@
 FROM m.daocloud.io/docker.io/library/python:3.12-slim
 
 # Set environment variables
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV UV_CACHE_DIR=/app/.uv-cache
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    UV_CACHE_DIR=/app/.uv-cache \
+    DEBIAN_FRONTEND=noninteractive
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    libpq-dev \
-    libmariadb-dev \
-    pkg-config \
-    && rm -rf /var/lib/apt/lists/*
+# Install system dependencies (with retries and without recommended extras)
+RUN set -eux; \
+    apt-get update -o Acquire::Retries=3; \
+    apt-get install -y --no-install-recommends \
+        gcc \
+        libpq-dev \
+        libmariadb-dev \
+        pkg-config \
+    ; \
+    rm -rf /var/lib/apt/lists/*
 
 # Install uv
 RUN pip install uv

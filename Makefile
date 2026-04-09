@@ -2,7 +2,7 @@
 
 # 项目配置
 PROJECT_NAME := omd-sharepoint-data
-RELEASE_VERSION = v1.0.0
+RELEASE_VERSION = v1.1.0
 APP = omd-sharepoint-data
 SERVER_BIN = ${APP}
 GIT_COUNT = $(shell git rev-list --all --count 2>/dev/null || echo "0")
