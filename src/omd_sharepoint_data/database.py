@@ -41,21 +41,6 @@ class SyncFile(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="记录更新时间")
 
 
-class SyncFolder(Base):
-    __tablename__ = "t_omd_sharepoint_sync_folders"
-
-    id = Column(Integer, primary_key=True, autoincrement=True, comment="主键ID，自增")
-    sharepoint_id = Column(String(255), unique=True, nullable=False, index=True, comment="SharePoint文件夹唯一标识符")
-    sharepoint_path = Column(String(1000), nullable=False, index=True, comment="SharePoint中的文件夹路径")
-    local_path = Column(String(1000), nullable=False, comment="本地文件夹路径")
-    folder_name = Column(String(255), nullable=False, comment="文件夹名称")
-    last_sync = Column(DateTime, nullable=True, comment="最后同步时间")
-    sync_status = Column(String(50), default="pending", comment="同步状态（pending, syncing, synced, failed）")
-    error_message = Column(Text, nullable=True, comment="错误信息")
-    created_at = Column(DateTime, default=datetime.utcnow, comment="记录创建时间")
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="记录更新时间")
-
-
 class SyncLog(Base):
     __tablename__ = "t_omd_sharepoint_sync_logs"
 

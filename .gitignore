@@ -3,13 +3,20 @@ __pycache__/
 *.py[oc]
 build/
 dist/
-wheels/
 data/
 logs/
+wheels/
 *.egg-info
-
 # Virtual environments
 .venv
 .env
 .idea/
-
+.vscode/
+.pytest_cache/
+.coverage
+htmlcov/
+node_modules/
+npm-debug.log*
+docker-compose.yml
+docker-compose.override.yml
+docker-compose.override.yml.bak

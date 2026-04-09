@@ -46,13 +46,14 @@ async def main():
             command = sys.argv[1]
 
             if command == "sync":
-                logger.info("Running manual sync...")
-                results = await scheduler.run_sync_now()
-                if results:
-                    logger.info(f"Sync completed: {results}")
-                else:
-                    logger.error("Sync failed")
-                    return 1
+               logger.info("Running manual PDF sync...")
+               # 支持可选的文件夹参数
+               results = await scheduler.run_pdf_sync_now()
+               if results:
+                   logger.info(f"PDF sync completed: {results}")
+               else:
+                   logger.error("PDF sync failed")
+                   return 1
 
             elif command == "cleanup":
                 logger.info("Running manual cleanup...")
@@ -67,10 +68,14 @@ async def main():
                 logger.info("Testing configuration...")
                 # Basic validation is done above
                 logger.info("✅ Configuration validated")
+
             else:
-                logger.error(f"Unknown command: {command}")
-                logger.info("Available commands: sync, cleanup, test")
-                return 1
+               logger.error(f"Unknown command: {command}")
+               logger.info("Available commands: sync, cleanup, test")
+               logger.info("  sync    - Sync PDF files from SharePoint (incremental sync)")
+               logger.info("  cleanup - Remove old sync records")
+               logger.info("  test    - Test configuration")
+               return 1
         else:
             # Run scheduled mode
             logger.info("Starting scheduled sync mode")

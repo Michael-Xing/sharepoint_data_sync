@@ -17,22 +17,21 @@ if str(src_path) not in sys.path:
 
 try:
     from .config import sharepoint_config
-    from .database import SyncFile, SyncFolder, SyncLog, db_manager
+    from .database import SyncFile, SyncLog, db_manager
     from .sharepoint_client import SharePointChinaClient
 except ImportError:
     # 如果相对导入失败，尝试绝对导入
     from omd_sharepoint_data.config import sharepoint_config
-    from omd_sharepoint_data.database import SyncFile, SyncFolder, SyncLog, db_manager
+    from omd_sharepoint_data.database import SyncFile, SyncLog, db_manager
     from omd_sharepoint_data.sharepoint_client import SharePointChinaClient
 
 
 class SyncManager:
-    """管理从 SharePoint 同步文件。"""
+    """管理从 SharePoint 同步PDF文件。"""
 
     def __init__(self):
         self.client = SharePointChinaClient()
         self.local_sync_path = sharepoint_config.local_sync_path
-        self.batch_size = sharepoint_config.batch_size
         self.max_concurrent_downloads = sharepoint_config.max_concurrent_downloads
 
     async def initialize(self):
@@ -54,238 +53,183 @@ class SyncManager:
 
         logger.info("同步管理器初始化成功")
 
-    async def sync_all_folders(self) -> Dict[str, int]:
-        """同步所有匹配模式的文件夹。"""
+    async def sync_pdf_files(self, target_folder_name: str) -> Dict[str, int]:
+        """同步项目文件中的所有PDF文件，支持增量同步。
+
+        同步策略：
+        1. 获取 SharePoint 中的所有当前PDF文件
+        2. 获取数据库中的所有现有记录
+        3. 对比SharePoint和数据库记录，进行增量同步：
+           - SharePoint中有新文件，数据库中无记录：同步
+           - SharePoint有文件，数据库中有记录，检查文件是否更新：更新则重新下载，否则跳过
+        """
         results = {
-            "folders_processed": 0,
-            "files_synced": 0,
-            "files_skipped": 0,
-            "files_failed": 0
+            "pdfs_found": 0,
+            "pdfs_downloaded": 0,
+            "pdfs_updated": 0,
+            "pdfs_skipped": 0,
+            "pdfs_failed": 0
         }
 
         try:
-            # Get folders to sync
-            folders = await self.client.get_folders_by_pattern(
-                sharepoint_config.sync_folders_pattern
-            )
+            # 步骤1：获取 SharePoint 中的所有当前PDF文件
+            current_pdf_files = await self.client.get_folders_pdf_by_pattern(sharepoint_config.sync_folders_pattern)
+            current_files_dict = {pdf_file["id"]: pdf_file for pdf_file in current_pdf_files}
+            results["pdfs_found"] = len(current_pdf_files)
 
-            logger.info(f"开始同步 {len(folders)} 个文件夹")
+            logger.info(f"SharePoint 中找到 {len(current_pdf_files)} 个PDF文件")
 
-            for folder in folders:
-                folder_results = await self.sync_folder(folder)
-                results["folders_processed"] += 1
-                results["files_synced"] += folder_results["synced"]
-                results["files_skipped"] += folder_results["skipped"]
-                results["files_failed"] += folder_results["failed"]
+            # 步骤2：获取数据库中的所有现有记录
+            session = db_manager.get_session()
+            try:
+                existing_files = session.query(SyncFile).filter_by(sync_status="synced").all()
+                existing_files_dict = {file.sharepoint_id: file for file in existing_files}
 
-                # Update folder sync status
-                await self._update_folder_status(folder["id"], "synced")
+                logger.info(f"数据库中有 {len(existing_files)} 个已同步的文件记录")
 
-        except Exception as e:
-            logger.error(f"同步失败: {e}")
+                # 步骤3：并发处理SharePoint中的文件，进行增量同步
+                semaphore = asyncio.Semaphore(self.max_concurrent_downloads)
 
-        return results
+                async def process_single_file(pdf_file: Dict) -> None:
+                    async with semaphore:
+                        try:
+                            await self._process_single_file(pdf_file, existing_files_dict, results, session)
+                        except Exception as e:
+                            results["pdfs_failed"] += 1
+                            logger.error(f"处理PDF文件 {pdf_file['name']} 失败: {e}")
 
-    async def sync_folder(self, folder_info: Dict) -> Dict[str, int]:
-        """同步特定文件夹。"""
-        folder_id = folder_info["id"]
-        folder_path = folder_info["server_relative_url"]
+                # 并发处理当前文件
+                tasks = [process_single_file(pdf_file) for pdf_file in current_pdf_files]
+                await asyncio.gather(*tasks, return_exceptions=True)
 
-        results = {"synced": 0, "skipped": 0, "failed": 0}
+                # 提交所有状态更新
+                session.commit()
 
-        try:
-            # Update folder status to in progress
-            await self._update_folder_status(folder_id, "syncing")
+                logger.info(f"PDF文件同步完成: {results}")
+                return results
 
-            # Get all files in the folder
-            files = await self.client.get_folder_files(folder_path)
-
-            logger.info(f"在文件夹 {folder_path} 中发现 {len(files)} 个文件")
-
-            # Process files in batches
-            for i in range(0, len(files), self.batch_size):
-                batch = files[i:i + self.batch_size]
-                batch_results = await self._sync_file_batch(batch, folder_path)
-                results["synced"] += batch_results["synced"]
-                results["skipped"] += batch_results["skipped"]
-                results["failed"] += batch_results["failed"]
+            finally:
+                db_manager.close_session(session)
 
         except Exception as e:
-            logger.error(f"同步文件夹 {folder_path} 失败: {e}")
-            await self._update_folder_status(folder_id, "failed", str(e))
-            results["failed"] += len(files) if 'files' in locals() else 0
+            logger.error(f"PDF文件同步失败: {e}")
+            return results
 
-        return results
-
-    async def _sync_file_batch(self, files: List[Dict], base_path: str) -> Dict[str, int]:
-        """并发控制同步一批文件。"""
-        results = {"synced": 0, "skipped": 0, "failed": 0}
-
-        # 创建信号量进行并发控制
-        semaphore = asyncio.Semaphore(self.max_concurrent_downloads)
-
-        async def sync_single_file(file_info: Dict) -> str:
-            async with semaphore:
-                return await self._sync_single_file(file_info, base_path)
-
-        # Process files concurrently
-        tasks = [sync_single_file(file) for file in files]
-        sync_results = await asyncio.gather(*tasks, return_exceptions=True)
-
-        # Process results
-        for result in sync_results:
-            if isinstance(result, Exception):
-                logger.error(f"File sync failed with exception: {result}")
-                results["failed"] += 1
-            elif result == "synced":
-                results["synced"] += 1
-            elif result == "skipped":
-                results["skipped"] += 1
-            else:
-                results["failed"] += 1
-
-        return results
-
-    async def _sync_single_file(self, file_info: Dict, base_path: str) -> str:
-        """同步单个文件。"""
-        file_id = file_info["id"]
-        file_url = file_info["server_relative_url"]
-        file_name = file_info["name"]
-        file_size = file_info["length"]
-        last_modified = file_info["time_last_modified"]
-        etag = file_info.get("etag")
-
+    async def _process_single_file(self, pdf_file: Dict, existing_files_dict: Dict[str, SyncFile], results: Dict[str, int], session):
+        """处理单个PDF文件（新增或更新）。"""
         try:
-            # Calculate local path
-            relative_path = file_url.replace(base_path, "").lstrip("/")
-            local_path = self.local_sync_path / relative_path
+            file_id = pdf_file["id"]
+            existing_file = existing_files_dict.get(file_id)
 
-            # 检查文件是否需要同步
-            existing_file = await self._get_existing_file(file_id)
-            if existing_file and self._file_unchanged(existing_file, file_info):
-                return "skipped"
+            # 构建本地路径：
+            # 现在支持多个基础目录，因此在本地同步目录下需要保留基础目录名称，
+            # 再按照目录树向下保留文件路径。
+            server_relative_url = pdf_file["server_relative_url"]
+            # server_relative_url 形如: "<基础目录>/<开发目录>/.../<文件名>"
+            # 直接将其拼接到本地同步根目录下，形成:
+            #   ./data/<基础目录>/<开发目录>/.../<文件名>
+            local_path = self.local_sync_path / server_relative_url
 
-            # Download file
-            success, checksum_or_error = await self.client.download_file(file_url, local_path)
+            # 确保目录存在
+            local_path.parent.mkdir(parents=True, exist_ok=True)
 
+            # 检查是否需要更新
+            needs_update = await self._file_needs_update(pdf_file, existing_file, local_path)
+
+            if not needs_update:
+                results["pdfs_skipped"] += 1
+                logger.debug(f"跳过未更改的PDF: {pdf_file['name']}")
+                return
+
+            # 下载文件
+            success, checksum = await self.client.download_file(pdf_file, local_path)
             if success:
-                await self._update_file_record(
-                    file_id, file_url, str(local_path), file_name,
-                    file_size, last_modified, etag, checksum_or_error, "synced"
-                )
-                return "synced"
+                if existing_file:
+                    results["pdfs_updated"] += 1
+                    logger.info(f"成功更新PDF: {pdf_file['name']}")
+                else:
+                    results["pdfs_downloaded"] += 1
+                    logger.info(f"成功下载PDF: {pdf_file['name']}")
+
+                # 更新数据库记录
+                await self._log_sync_success(pdf_file, str(local_path), checksum, session)
             else:
-                await self._update_file_record(
-                    file_id, file_url, str(local_path), file_name,
-                    file_size, last_modified, etag, None, "failed"
-                )
-                return "failed"
+                results["pdfs_failed"] += 1
+                logger.error(f"下载PDF失败: {pdf_file['name']}")
+
+                # 记录失败日志
+                await self._log_sync_failure(pdf_file, "Download failed", session)
 
         except Exception as e:
-            logger.error(f"Failed to sync file {file_url}: {e}")
-            return "failed"
+            results["pdfs_failed"] += 1
+            logger.error(f"处理PDF文件 {pdf_file['name']} 时出错: {e}")
 
-    def _file_unchanged(self, existing_file: SyncFile, file_info: Dict) -> bool:
-        """检查文件自上次同步以来是否已更改。"""
-        # 如果可用，比较 ETag
-        if existing_file.etag and file_info.get("etag"):
-            return existing_file.etag == file_info["etag"]
+            # 记录失败日志
+            await self._log_sync_failure(pdf_file, str(e), session)
 
-        # 比较最后修改时间
-        if existing_file.last_modified:
-            existing_time = existing_file.last_modified.timestamp()
-            new_time = datetime.fromisoformat(file_info["time_last_modified"].replace('Z', '+00:00')).timestamp()
-            return abs(existing_time - new_time) < 1  # 1 second tolerance
-
-        return False
-
-    async def _get_existing_file(self, file_id: str) -> Optional[SyncFile]:
-        """从数据库获取现有文件记录。"""
-        session = db_manager.get_session()
+    async def _log_sync_success(self, pdf_file: Dict, local_path: str, checksum: str, session):
+        """记录成功的同步操作。"""
         try:
-            return session.query(SyncFile).filter_by(sharepoint_id=file_id).first()
-        finally:
-            db_manager.close_session(session)
+            # 检查是否已存在记录
+            existing_file = session.query(SyncFile).filter_by(sharepoint_id=pdf_file["id"]).first()
 
-    async def _update_file_record(
-        self, file_id: str, sharepoint_path: str, local_path: str,
-        file_name: str, file_size: int, last_modified: str,
-        etag: Optional[str], checksum: Optional[str], status: str
-    ):
-        """在数据库中更新或创建文件记录。"""
-        session = db_manager.get_session()
-        try:
-            # Parse last_modified
-            last_mod_dt = datetime.fromisoformat(last_modified.replace('Z', '+00:00'))
-
-            file_record = session.query(SyncFile).filter_by(sharepoint_id=file_id).first()
-
-            if file_record:
-                # Update existing
-                file_record.sharepoint_path = sharepoint_path
-                file_record.local_path = local_path
-                file_record.file_name = file_name
-                file_record.file_size = file_size
-                file_record.last_modified = last_mod_dt
-                file_record.etag = etag
-                file_record.checksum = checksum
-                file_record.sync_status = status
-                file_record.error_message = None if status == "synced" else f"Sync {status}"
-                file_record.updated_at = datetime.utcnow()
+            if existing_file:
+                # 更新现有记录
+                existing_file.sharepoint_path = pdf_file["server_relative_url"]
+                existing_file.local_path = local_path
+                existing_file.file_name = pdf_file["name"]
+                existing_file.file_size = int(pdf_file["size"]) if isinstance(pdf_file["size"], (int, str)) else 0
+                existing_file.last_modified = self._parse_datetime(pdf_file["time_last_modified"])
+                existing_file.etag = pdf_file.get("etag")
+                existing_file.checksum = checksum
+                existing_file.sync_status = "synced"
+                existing_file.error_message = None
+                existing_file.updated_at = datetime.utcnow()
             else:
-                # Create new
-                file_record = SyncFile(
-                    sharepoint_id=file_id,
-                    sharepoint_path=sharepoint_path,
+                # 创建新记录
+                new_file = SyncFile(
+                    sharepoint_id=pdf_file["id"],
+                    sharepoint_path=pdf_file["server_relative_url"],
                     local_path=local_path,
-                    file_name=file_name,
-                    file_size=file_size,
-                    last_modified=last_mod_dt,
-                    etag=etag,
+                    file_name=pdf_file["name"],
+                    file_size=int(pdf_file["size"]) if isinstance(pdf_file["size"], (int, str)) else 0,
+                    last_modified=self._parse_datetime(pdf_file["time_last_modified"]),
+                    etag=pdf_file.get("etag"),
                     checksum=checksum,
-                    sync_status=status
+                    sync_status="synced"
                 )
-                session.add(file_record)
+                session.add(new_file)
 
-            session.commit()
+            # 记录同步日志
+            sync_log = SyncLog(
+                operation="download",
+                sharepoint_path=pdf_file["server_relative_url"],
+                local_path=local_path,
+                status="success",
+                message=f"Successfully downloaded PDF: {pdf_file['name']}",
+                file_size=int(pdf_file["size"]) if isinstance(pdf_file["size"], (int, str)) else 0
+            )
+            session.add(sync_log)
 
         except Exception as e:
-            session.rollback()
-            logger.error(f"Failed to update file record: {e}")
-        finally:
-            db_manager.close_session(session)
+            logger.error(f"记录同步成功信息失败: {e}")
 
-    async def _update_folder_status(self, folder_id: str, status: str, error: Optional[str] = None):
-        """更新文件夹同步状态。"""
-        session = db_manager.get_session()
+    async def _log_sync_failure(self, pdf_file: Dict, error_message: str, session):
+        """记录失败的同步操作。"""
         try:
-            folder_record = session.query(SyncFolder).filter_by(sharepoint_id=folder_id).first()
-
-            if folder_record:
-                folder_record.sync_status = status
-                folder_record.error_message = error
-                folder_record.last_sync = datetime.utcnow()
-                folder_record.updated_at = datetime.utcnow()
-            else:
-                # Create folder record if it doesn't exist
-                folder_record = SyncFolder(
-                    sharepoint_id=folder_id,
-                    sharepoint_path="",  # Will be filled later
-                    local_path="",
-                    folder_name="",
-                    sync_status=status,
-                    error_message=error,
-                    last_sync=datetime.utcnow()
-                )
-                session.add(folder_record)
-
-            session.commit()
+            # 记录失败日志
+            sync_log = SyncLog(
+                operation="download",
+                sharepoint_path=pdf_file["server_relative_url"],
+                status="failed",
+                message=f"Failed to download PDF {pdf_file['name']}: {error_message}",
+                file_size=int(pdf_file["size"]) if isinstance(pdf_file["size"], (int, str)) else 0
+            )
+            session.add(sync_log)
 
         except Exception as e:
-            session.rollback()
-            logger.error(f"Failed to update folder status: {e}")
-        finally:
-            db_manager.close_session(session)
+            logger.error(f"记录同步失败信息失败: {e}")
+
 
 
     async def cleanup_old_files(self) -> int:
@@ -297,6 +241,75 @@ class SyncManager:
         except Exception as e:
             logger.error(f"Failed to cleanup old files: {e}")
             return 0
+
+    async def _file_needs_update(self, pdf_file: Dict, existing_file: SyncFile, local_path: Path) -> bool:
+        """检查文件是否需要更新。"""
+        try:
+            # 如果数据库中没有记录，需要下载
+            if not existing_file:
+                logger.debug(f"文件 {pdf_file['name']} 在数据库中不存在，需要下载")
+                return True
+
+            # 如果本地文件不存在，但数据库中有记录，说明已经同步过，无需再次下载
+            if not local_path.exists():
+                logger.debug(f"文件 {pdf_file['name']} 在本地不存在，但数据库中有记录，跳过下载")
+                return False
+
+            # 检查文件大小是否相同
+            local_size = local_path.stat().st_size
+            remote_size = int(pdf_file["size"]) if isinstance(pdf_file["size"], (int, str)) else 0
+            if local_size != remote_size:
+                logger.debug(f"文件 {pdf_file['name']} 大小不同，需要更新 (本地: {local_size}, 远程: {remote_size})")
+                return True
+
+            # 检查修改时间（允许1秒钟的误差）
+            if existing_file.last_modified:
+                remote_time = self._parse_datetime(pdf_file["time_last_modified"])
+                # 确保两个时间都是UTC时间
+                import datetime
+                utc_tz = datetime.timezone.utc
+
+                if remote_time.tzinfo is None:
+                    remote_time = remote_time.replace(tzinfo=utc_tz)
+                elif remote_time.tzinfo != utc_tz:
+                    remote_time = remote_time.astimezone(utc_tz)
+
+                if existing_file.last_modified.tzinfo is None:
+                    local_time = existing_file.last_modified.replace(tzinfo=utc_tz)
+                else:
+                    local_time = existing_file.last_modified
+
+                time_diff = abs((remote_time - local_time).total_seconds())
+                if time_diff > 1:  # 超过1秒差异
+                    logger.debug(f"文件 {pdf_file['name']} 修改时间不同，需要更新 (差异: {time_diff}秒)")
+                    return True
+
+            # 检查 ETag（如果有的话）
+            if existing_file.etag and pdf_file.get("etag"):
+                if existing_file.etag != pdf_file["etag"]:
+                    logger.debug(f"文件 {pdf_file['name']} ETag不同，需要更新 (本地: {existing_file.etag}, 远程: {pdf_file['etag']})")
+                    return True
+
+            # 文件未更改，不需要更新
+            logger.debug(f"文件 {pdf_file['name']} 未更改，跳过更新")
+            return False
+
+        except Exception as e:
+            logger.warning(f"检查文件 {pdf_file['name']} 是否需要更新时出错: {e}")
+            # 出错时保守处理，认为需要更新
+            return True
+
+    def _parse_datetime(self, time_value) -> datetime:
+        """解析日期时间，支持多种格式。"""
+        if isinstance(time_value, datetime):
+            return time_value
+        elif isinstance(time_value, str):
+            if time_value.endswith('Z'):
+                time_value = time_value[:-1] + '+00:00'
+            return datetime.fromisoformat(time_value)
+        else:
+            # 其他情况，尝试转换
+            return datetime.fromtimestamp(float(time_value))
 
     async def close(self):
         """关闭资源。"""
