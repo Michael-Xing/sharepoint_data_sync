@@ -57,7 +57,8 @@ SHAREPOINT_CLIENT_SECRET=your-azure-ad-app-client-secret
 SHAREPOINT_TENANT_ID=your-azure-ad-tenant-id
 
 # 同步配置
-SHAREPOINT_SYNC_FOLDERS_PATTERN=开发-*
+SHAREPOINT_SYNC_FOLDERS_PATTERN=^(\d+\.)?\s*CHG-\d+$;^.*$
+SHAREPOINT_SYNC_STANDARDS_PATTERN=.*（中文版）$
 SHAREPOINT_LOCAL_SYNC_PATH=./data
 SHAREPOINT_RETENTION_DAYS=7
 SHAREPOINT_BATCH_SIZE=100
@@ -189,7 +190,8 @@ kubectl logs -l job-name=sharepoint-cleanup-job
 
 ### 同步配置
 
-- `SHAREPOINT_SYNC_FOLDERS_PATTERN`: 要同步的文件夹模式，支持通配符（如 `开发-*`）
+- `SHAREPOINT_SYNC_FOLDERS_PATTERN`: 要同步的文件夹模式，支持通配符（如 `^(\d+\.)?\s*CHG-\d+$`）
+- `SHAREPOINT_SYNC_STANDARDS_PATTERN`: 设计技术基准子目录的匹配模式（可选），支持通配符或正则，匹配后从该目录同步所有 PDF；例如 `.*（中文版）$` 匹配末尾为 `(中文版)` 的文件夹
 - `SHAREPOINT_LOCAL_SYNC_PATH`: 本地存储路径
 - `SHAREPOINT_RETENTION_DAYS`: 文件保留天数（默认7天）
 - `SHAREPOINT_BATCH_SIZE`: 批量处理文件数量

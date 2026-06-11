@@ -6,7 +6,8 @@ metadata:
 data:
   SHAREPOINT_SITE_URL: "https://yourtenant.sharepoint.cn/sites/yoursite"
   SHAREPOINT_AUTHORITY_URL: "https://login.partner.microsoftonline.cn"
-  SHAREPOINT_SYNC_FOLDERS_PATTERN: "开发-*"
+  SHAREPOINT_SYNC_FOLDERS_PATTERN: "^(\d+\.)?\s*CHG-\d+$;^.*$"
+  SHAREPOINT_SYNC_STANDARDS_PATTERN: ".*（中文版）$"
   SHAREPOINT_LOCAL_SYNC_PATH: "/app/data"
   SHAREPOINT_RETENTION_DAYS: "7"
   SHAREPOINT_BATCH_SIZE: "100"
