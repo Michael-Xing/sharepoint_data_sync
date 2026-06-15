@@ -390,13 +390,7 @@ class SharePointChinaClient:
             path_segments = [seg for seg in current_path.split("/") if seg] if current_path else []
 
             def _is_under_target_folder() -> bool:
-                """根据当前路径判断是否在目标子目录（DHF試験 或 DR1~4/AI入力フォルダ）下。
-
-                支持带序号前缀的目录名，如：
-                - "5.DHF試験" / "DHF試験"
-                - "1.DR1" / "DR1"
-                - "0.AI入力" / "AI入力フォルダ"
-                """
+                """判断当前路径是否在目标子目录（DHF試験 / DR1~4 / AI入力）下，同级目录都同步。"""
                 if not path_segments:
                     return False
 
@@ -404,19 +398,9 @@ class SharePointChinaClient:
                 _DR_RE  = re.compile(r'^(?:\d+\.)?DR[1-4]$')
                 _AI_RE  = re.compile(r'^(?:\d+\.)?AI[入输]')
 
-                if any(_DHF_RE.match(seg) for seg in path_segments):
-                    return True
-
-                # AI 在任意层级都同步（独立目录或 DR 子目录）
-                if any(_AI_RE.match(seg) for seg in path_segments):
-                    return True
-
-                # DR[1-4] 作为子目录时的嵌套结构：DR/AI
-                for idx, seg in enumerate(path_segments):
-                    if _DR_RE.match(seg):
-                        if any(_AI_RE.match(s) for s in path_segments[idx + 1:]):
-                            return True
-
+                for seg in path_segments:
+                    if _DHF_RE.match(seg) or _DR_RE.match(seg) or _AI_RE.match(seg):
+                        return True
                 return False
 
 
