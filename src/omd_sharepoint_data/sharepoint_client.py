@@ -116,7 +116,7 @@ class SharePointChinaClient:
         1. 根据驱动和根目录文件夹，找到基础文件夹（如"02.开发项目资料存储"）
         2. 在基础文件夹下找到所有匹配 sync_folders_pattern 的子文件夹
         3. 如果配置了 sync_standards_pattern，则在这些子文件夹下进一步递归查找匹配的孙目录，
-           找到后从该孙目录开始同步所有 PDF；否则按原有规则同步 DHF試験/DRx 子目录
+           找到后从该孙目录开始同步所有 PDF；否则按原有规则同步 DHF/DRx/AI入力・AI输入 子目录
         4. 返回PDF文件对象列表，server_relative_url从基础文件夹开始
 
         Returns:
@@ -202,7 +202,7 @@ class SharePointChinaClient:
                         # 步骤5：处理 standards 子目录模式（多级递归匹配）
                         # current_standards 由各基础文件夹独立配置：
                         #   - 非空值：递归查找匹配该模式的子目录，同步其下所有 PDF（跳过 DHF 过滤）
-                        #   - 空值：按原有逻辑，仅同步 DHF試験/DRx/AI入力 下的 PDF
+                        #   - 空值：按原有逻辑，仅同步 DHF/DRx/AI入力・AI输入 子目录
                         for dev_folder in dev_folders:
                             logger.debug(f"正在处理开发文件夹: {base_folder.name}/{dev_folder.name}")
                             # current_standards 为 __NONE__ 或空时：走 DHF/DR/AI 过滤模式
@@ -224,7 +224,7 @@ class SharePointChinaClient:
                                         skip_dhf_filter=True
                                     )
                             else:
-                                logger.debug(f"基础文件夹 {base_folder.name} 未配置 standards_pattern，使用 DHF/DR/AI 过滤")
+                                logger.debug(f"基础文件夹 {base_folder.name} 未配置 standards_pattern，使用 DHF/DRx/AI入力・AI输入 过滤")
                                 await self._collect_pdf_files_recursive_with_base(
                                     drive.id, dev_folder, base_folder.name, f"{dev_folder.name}", pdf_files,
                                     skip_dhf_filter=False, folder_filter=current_pattern
@@ -379,9 +379,9 @@ class SharePointChinaClient:
         目录过滤规则：
         - 当 skip_dhf_filter=True 时：从匹配目录开始，同步该目录及其任意子目录中的所有 PDF。
         - 当 skip_dhf_filter=False 时：
-          - 同步 ``DHF試験`` 文件夹及其任意子文件夹中的所有 PDF。
-          - 同步 ``AI入力`` 文件夹及其任意子文件夹中的所有 PDF。
-          - 同步 ``DR1``/``DR2``/``DR3``/``DR4`` 下 ``AI入力`` 子文件夹中的所有 PDF。
+          - 同步以 ``DHF`` 开头的文件夹及其任意子文件夹中的所有 PDF。
+          - 同步以 ``AI入力`` 或 ``AI输入`` 开头的文件夹及其任意子文件夹中的所有 PDF。
+          - 同步 ``DR1``/``DR2``/``DR3``/``DR4`` 下以 ``AI入力`` 或 ``AI输入`` 开头的子文件夹中的所有 PDF。
         - folder_filter: 可选的正则/通配符模式，只遍历匹配该模式的子目录。
           用于实现多层级的文件夹模式匹配（如 CHG 项目中的 level-2 CHG 目录过滤）。
         """
@@ -390,12 +390,18 @@ class SharePointChinaClient:
             path_segments = [seg for seg in current_path.split("/") if seg] if current_path else []
 
             def _is_under_target_folder() -> bool:
-                """判断当前路径是否在目标子目录（DHF試験 / DR1~4 / AI入力）下，同级目录都同步。"""
+                """判断当前路径是否在目标子目录（DHF / DR1~4 / AI入力・AI输入）下，同级目录都同步。
+
+                匹配规则：
+                - DHF: 目录段以 "DHF" 开头（兼容 "DHF試験"、"DHF试验"、"DHF-XXX" 等）
+                - DR1~4: 目录段以 "DR1"/"DR2"/"DR3"/"DR4" 开头（兼容 "DR1-XXX"、"DR2-子目录" 等）
+                - AI: 目录段以 "AI入力" 或 "AI输入" 开头（兼容 "AI入力-XXX"、"AI输入-XXX" 等）
+                """
                 if not path_segments:
                     return False
 
-                _DHF_RE = re.compile(r'^(?:\d+\.)?DHF[驗验]')
-                _DR_RE  = re.compile(r'^(?:\d+\.)?DR[1-4]$')
+                _DHF_RE = re.compile(r'^(?:\d+\.)?DHF')
+                _DR_RE  = re.compile(r'^(?:\d+\.)?DR[1-4]')
                 _AI_RE  = re.compile(r'^(?:\d+\.)?AI[入输]')
 
                 for seg in path_segments:
