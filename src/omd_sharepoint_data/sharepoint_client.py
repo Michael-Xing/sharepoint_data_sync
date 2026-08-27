@@ -1,8 +1,7 @@
 """使用 Microsoft Graph SDK 的中国地区 SharePoint 客户端。"""
 
 import asyncio, aiohttp
-from os import name
-from pydoc import cli
+import re
 import hashlib
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
@@ -114,10 +113,11 @@ class SharePointChinaClient:
         """获取项目文件中的所有PDF文件。
 
         主要功能：
-        1. 根据驱动和根目录文件夹，找到根目录下的"项目文件"
-        2. 在"项目文件"下找到所有以"开发-*"开头的文件夹
-        3. 递归查找这些文件夹下的所有.pdf文件
-        4. 返回PDF文件对象列表，server_relative_url从"项目文件"开始
+        1. 根据驱动和根目录文件夹，找到基础文件夹（如"02.开发项目资料存储"）
+        2. 在基础文件夹下找到所有匹配 sync_folders_pattern 的子文件夹
+        3. 如果配置了 sync_standards_pattern，则在这些子文件夹下进一步递归查找匹配的孙目录，
+           找到后从该孙目录开始同步所有 PDF；否则按原有规则同步 DHF/DRx/AI入力・AI输入 子目录
+        4. 返回PDF文件对象列表，server_relative_url从基础文件夹开始
 
         Returns:
             PDF文件对象列表，每个对象包含：
@@ -142,8 +142,16 @@ class SharePointChinaClient:
 
             pdf_files = []
 
-            # 解析支持多个基础文件夹名称
+            # 解析基础文件夹名称和对应的匹配模式（两者 1:1 对应，用 ; 分隔）
             base_folder_names = self._parse_multi_values(sharepoint_config.base_folder_name)
+            folders_patterns_raw = self._parse_multi_values(sharepoint_config.sync_folders_pattern)
+            standards_patterns_raw = self._parse_multi_values(sharepoint_config.sync_standards_pattern)
+            # 用更少的模式补齐，使 base_folder_names[i] 总能取到对应 pattern
+            folders_patterns_list = folders_patterns_raw + [folders_patterns_raw[0]] * (len(base_folder_names) - len(folders_patterns_raw))
+            standards_patterns_list = standards_patterns_raw + [standards_patterns_raw[0]] * (len(base_folder_names) - len(standards_patterns_raw))
+            # 建立 name -> pattern 的映射
+            folder_pattern_map = dict(zip(base_folder_names, folders_patterns_list))
+            folder_standards_map = dict(zip(base_folder_names, standards_patterns_list))
 
             # 步骤2：查找基础文件夹（可能有多个）
             if root_children and root_children.value:
@@ -157,6 +165,10 @@ class SharePointChinaClient:
                         # 步骤3：获取该基础文件夹下的内容
                         base_children = await self.graph_client.drives.by_drive_id(drive.id).items.by_drive_item_id(base_folder.id).children.get()
 
+                        # 获取该基础文件夹对应的匹配模式
+                        current_pattern = folder_pattern_map.get(base_folder.name, folders_patterns_list[0])
+                        current_standards = folder_standards_map.get(base_folder.name, standards_patterns_list[0])
+
                         # 步骤3.1：记录基础目录下的所有实际子目录，方便排查匹配问题
                         all_subfolder_names = []
                         if base_children and base_children.value:
@@ -166,7 +178,7 @@ class SharePointChinaClient:
 
                         logger.info(
                             f"基础文件夹 {base_folder.name} 下的实际子目录: {all_subfolder_names} "
-                            f"(同步模式: {sharepoint_config.sync_folders_pattern})"
+                            f"(同步模式: {current_pattern}, standards: '{current_standards}')"
                         )
 
                         # 步骤4：过滤出匹配开发文件夹模式的文件
@@ -175,7 +187,9 @@ class SharePointChinaClient:
                         if base_children and base_children.value:
                             for child in base_children.value:
                                 if child.folder:
-                                    if self._matches_pattern(child.name, sharepoint_config.sync_folders_pattern):
+                                    matched = self._matches_pattern(child.name, current_pattern)
+                                    logger.info(f"子目录 '{child.name}' 匹配模式 '{current_pattern}': {matched}")
+                                    if matched:
                                         dev_folders.append(child)
                                     else:
                                         unmatched_folders.append(child.name)
@@ -185,12 +199,36 @@ class SharePointChinaClient:
                             f"匹配: {[f.name for f in dev_folders]}, 未匹配: {unmatched_folders}"
                         )
 
-                        # 步骤5：递归查找每个开发文件夹下的PDF文件
+                        # 步骤5：处理 standards 子目录模式（多级递归匹配）
+                        # current_standards 由各基础文件夹独立配置：
+                        #   - 非空值：递归查找匹配该模式的子目录，同步其下所有 PDF（跳过 DHF 过滤）
+                        #   - 空值：按原有逻辑，仅同步 DHF/DRx/AI入力・AI输入 子目录
                         for dev_folder in dev_folders:
                             logger.debug(f"正在处理开发文件夹: {base_folder.name}/{dev_folder.name}")
-                            await self._collect_pdf_files_recursive_with_base(
-                                drive.id, dev_folder, base_folder.name, f"{dev_folder.name}", pdf_files
-                            )
+                            # current_standards 为 __NONE__ 或空时：走 DHF/DR/AI 过滤模式
+                            # current_standards 为其他模式时：递归找匹配的子目录，同步其下所有 PDF
+                            if current_standards.strip() and current_standards != "__NONE__":
+                                matched_sub_folders = []
+                                await self._find_folders_recursive_by_pattern(
+                                    drive.id, dev_folder, f"{dev_folder.name}", current_standards, matched_sub_folders
+                                )
+                                if matched_sub_folders:
+                                    logger.info(
+                                        f"在 {base_folder.name}/{dev_folder.name} 下找到 {len(matched_sub_folders)} 个匹配 "
+                                        f"standards_pattern '{current_standards}' 的子目录: "
+                                        f"{[f[0] for f in matched_sub_folders]}"
+                                    )
+                                for sub_path, sub_item in matched_sub_folders:
+                                    await self._collect_pdf_files_recursive_with_base(
+                                        drive.id, sub_item, base_folder.name, sub_path, pdf_files,
+                                        skip_dhf_filter=True
+                                    )
+                            else:
+                                logger.debug(f"基础文件夹 {base_folder.name} 未配置 standards_pattern，使用 DHF/DRx/AI入力・AI输入 过滤")
+                                await self._collect_pdf_files_recursive_with_base(
+                                    drive.id, dev_folder, base_folder.name, f"{dev_folder.name}", pdf_files,
+                                    skip_dhf_filter=False, folder_filter=current_pattern
+                                )
 
                 if not found_any_base:
                     logger.warning(f"未找到基础文件夹, 期望名称: {base_folder_names}")
@@ -276,16 +314,18 @@ class SharePointChinaClient:
             elif ch in seps and brace_depth == 0:
                 # 只有在不在花括号内部时，才作为分隔符处理
                 part = "".join(current).strip()
-                if part:
-                    parts.append(part)
+                if not part:
+                    part = "__NONE__"
+                parts.append(part)
                 current = []
             else:
                 current.append(ch)
 
         # 收尾
         tail = "".join(current).strip()
-        if tail:
-            parts.append(tail)
+        if not tail:
+            tail = "__NONE__"
+        parts.append(tail)
 
         return parts
 
@@ -301,41 +341,74 @@ class SharePointChinaClient:
             return False, str(e)
 
 
-    async def _collect_pdf_files_recursive_with_base(self, drive_id: str, base_folder_item, base_folder_name: str, current_path: str, pdf_files: List[Dict]):
-        """从开发文件夹开始递归收集PDF文件，路径从'项目文件'开始构建。
+    async def _find_folders_recursive_by_pattern(
+        self, drive_id: str, current_item, current_path: str, pattern: str, matched_folders: List[Tuple[str, object]]
+    ):
+        """递归查找所有匹配指定模式的子目录。
 
-        目录过滤规则（基于正则匹配得到的 ``开发-*`` 根目录的子结构）：
-        - 仅同步匹配正则（如 ``开发-*``）后的“开发目录”下的内容。
-        - 在这些“开发目录”下：
-          - 同步 ``DHF试验`` 文件夹及其任意子文件夹中的所有 PDF。
-          - 同步子文件夹 ``DR1`` / ``DR2`` / ``DR3`` / ``DR4`` 下
-            ``AI输入文件夹`` 及其任意子文件夹中的所有 PDF。
-        - 其他路径下的 PDF 不同步。
+        Args:
+            drive_id: 驱动器 ID
+            current_item: 当前文件夹 item
+            current_path: 从基础开发目录开始的相对路径
+            pattern: 匹配模式（支持通配符/正则）
+            matched_folders: 匹配结果列表，元素为 (路径字符串, item对象)
+        """
+        try:
+            children = await self.graph_client.drives.by_drive_id(drive_id).items.by_drive_item_id(current_item.id).children.get()
+            if not children or not children.value:
+                return
+
+            for item in children.value:
+                if item.folder:
+                    sub_path = f"{current_path}/{item.name}"
+                    if self._matches_pattern(item.name, pattern):
+                        matched_folders.append((sub_path, item))
+                    else:
+                        await self._find_folders_recursive_by_pattern(
+                            drive_id, item, sub_path, pattern, matched_folders
+                        )
+        except Exception as e:
+            logger.warning(f"遍历目录 {current_path} 时出错: {e}")
+
+    async def _collect_pdf_files_recursive_with_base(
+        self, drive_id: str, base_folder_item, base_folder_name: str, current_path: str, pdf_files: List[Dict],
+        skip_dhf_filter: bool = False, folder_filter: Optional[str] = None
+    ):
+        """从给定目录开始递归收集所有 PDF 文件，路径从基础文件夹开始构建。
+
+        目录过滤规则：
+        - 当 skip_dhf_filter=True 时：从匹配目录开始，同步该目录及其任意子目录中的所有 PDF。
+        - 当 skip_dhf_filter=False 时：
+          - 同步以 ``DHF`` 开头的文件夹及其任意子文件夹中的所有 PDF。
+          - 同步以 ``AI入力`` 或 ``AI输入`` 开头的文件夹及其任意子文件夹中的所有 PDF。
+          - 同步 ``DR1``/``DR2``/``DR3``/``DR4`` 下以 ``AI入力`` 或 ``AI输入`` 开头的子文件夹中的所有 PDF。
+        - folder_filter: 可选的正则/通配符模式，只遍历匹配该模式的子目录。
+          用于实现多层级的文件夹模式匹配（如 CHG 项目中的 level-2 CHG 目录过滤）。
         """
         try:
             # 解析当前路径的各级目录，current_path 形如: "<根开发目录>/子目录1/子目录2"
             path_segments = [seg for seg in current_path.split("/") if seg] if current_path else []
 
             def _is_under_target_folder() -> bool:
-                """根据当前路径判断是否在目标子目录（DHF试验 或 DR1~4/AI输入文件夹）下。"""
+                """判断当前路径是否在目标子目录（DHF / DR1~4 / AI入力・AI输入）下，同级目录都同步。
+
+                匹配规则：
+                - DHF: 目录段以 "DHF" 开头（兼容 "DHF試験"、"DHF试验"、"DHF-XXX" 等）
+                - DR1~4: 目录段以 "DR1"/"DR2"/"DR3"/"DR4" 开头（兼容 "DR1-XXX"、"DR2-子目录" 等）
+                - AI: 目录段以 "AI入力" 或 "AI输入" 开头（兼容 "AI入力-XXX"、"AI输入-XXX" 等）
+                """
                 if not path_segments:
-                    # 根开发目录本身不直接同步 PDF
                     return False
 
-                # 1) DHF试验 目录下的所有 PDF
-                if "DHF试验" in path_segments:
-                    return True
+                _DHF_RE = re.compile(r'^(?:\d+\.)?DHF')
+                _DR_RE  = re.compile(r'^(?:\d+\.)?DR[1-4]')
+                _AI_RE  = re.compile(r'^(?:\d+\.)?AI[入输]')
 
-                # 2) DR1~DR4 子目录下的 AI输入文件夹 中的所有 PDF
-                dr_names = {"DR1", "DR2", "DR3", "DR4"}
-                for idx, seg in enumerate(path_segments):
-                    if seg in dr_names:
-                        # 只要在该 DRx 之后的层级中出现 AI输入文件夹 即认为符合
-                        if "AI输入文件夹" in path_segments[idx + 1 :]:
-                            return True
-
-                # 其他路径不需要同步
+                for seg in path_segments:
+                    if _DHF_RE.match(seg) or _DR_RE.match(seg) or _AI_RE.match(seg):
+                        return True
                 return False
+
 
             # 获取当前文件夹的内容
             folder_children = await self.graph_client.drives.by_drive_id(drive_id).items.by_drive_item_id(base_folder_item.id).children.get()
@@ -343,9 +416,9 @@ class SharePointChinaClient:
             if folder_children and folder_children.value:
                 for item in folder_children.value:
                     if item.file and item.name.lower().endswith('.pdf'):
-                        # 应用目录过滤规则：不在目标子目录下的 PDF 不同步
-                        # if not _is_under_target_folder():
-                        #     continue
+                        # 应用目录过滤规则：不在目标子目录下的 PDF 不同步（skip_dhf_filter=True 时跳过此过滤）
+                        if not skip_dhf_filter and not _is_under_target_folder():
+                            continue
                         try:
                             # 构建从配置的基础文件夹开始的服务器相对路径，完全保留 SharePoint 中的目录层级
                             # 例如: "<基础目录>/开发-XXX/DR1/AI输入文件夹/子目录/文件.pdf"
@@ -370,10 +443,16 @@ class SharePointChinaClient:
                         except Exception as e:
                             logger.warning(f"处理PDF文件 {item.name} 时出错: {e}")
                     elif item.folder:
-                        # 递归处理子文件夹
+                        # 如果有 folder_filter，只遍历匹配的子目录
+                        if folder_filter and not self._matches_pattern(item.name, folder_filter):
+                            continue
+                        # 递归处理子文件夹（清除 folder_filter，只在当前层级生效一次）
                         try:
                             subfolder_path = f"{current_path}/{item.name}"
-                            await self._collect_pdf_files_recursive_with_base(drive_id, item, base_folder_name, subfolder_path, pdf_files)
+                            await self._collect_pdf_files_recursive_with_base(
+                                drive_id, item, base_folder_name, subfolder_path, pdf_files,
+                                skip_dhf_filter, folder_filter=None
+                            )
                         except Exception as e:
                             logger.warning(f"无法访问子文件夹 {item.name}: {e}")
         except Exception as e:
@@ -399,13 +478,3 @@ class SharePointChinaClient:
         """关闭资源。"""
         if self.http_client:
             await self.http_client.aclose()
-
-async def main():
-    client = SharePointChinaClient()
-    folders = await client.get_folders_by_pattern(sharepoint_config.sync_folders_pattern)
-    for file_info in folders:
-        success, checksum_or_error = await client.download_file(file_info)
-
-if __name__ == "__main__":
-    result = asyncio.run(main())
-    print(result)  
